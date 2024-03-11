@@ -1,0 +1,75 @@
+<div class="h-screen flex flex-col items-center justify-center">
+  <div class="container mx-auto px-4 h-full">
+    <div class="flex content-center items-center justify-center h-full">
+      <div class="w-full lg:w-6/12 px-4">
+        <div
+          class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-200 border-0"
+        >
+          <h1 class="text-4xl text-center">Bienvenido</h1>
+          <pre class="text-4xl text-center">{{ name }}</pre>
+          <h2 class="text-center">
+            Comentanos cómo fue tu experiencia con nuestro personal
+          </h2>
+          <form>
+            <div class="bg-slate-100 px-6 shadow">
+              <div class="space-y-1 border-t py-3">
+                <div class="grid grid-cols-1 gap-y-8 justify-start">
+                  <button type="button"
+                    class="block rounded-3xl px-5 py-5 text-slate-700 bg-yellow-200 w-full"
+                  >
+                    EXCELENTE 😁
+                  </button>
+                  <button type="button"
+                    class="block rounded-3xl px-5 py-5 text-slate-700 bg-green-400 w-full"
+                  >
+                    BUENO 😊
+                  </button>
+                  <button
+                  type="button"
+                    class="block rounded-3xl px-5 py-5 text-slate-700 bg-gray-500 w-full"
+                  >
+                    REGULAR 😑
+                  </button>
+                  <button type="button"
+                    class="block rounded-3xl px-5 py-5 text-slate-700 bg-red-500 w-full"
+                  >
+                    MALO 😔
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="relative w-full mb-3">
+              <label
+                for="grid-password"
+                class="block uppercase text-blueGray-600 text-xs font-thin text-center mb-2"
+                >Sugerencia</label
+              >
+              <input
+                type="text"
+                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                placeholder="Sugerencia"
+              />
+            </div>
+            <div class="text-center mt-6">
+              <button
+                type="button"
+                class="bg-blue-500 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded-3xl shadow hover:shadow-lg outline-none focus:outline-none w-full ease-linear transition-all duration-150"
+              >
+                Enviar
+              </button>
+            </div>
+            <div class="text-center mt-3">
+              <button
+                type="button"
+                class="bg-red-500 w-56 h-14 rounded-3xl text-sm hover:bg-gradient-to-b from-blue-300 to-zinc-500"
+                (click)="(logout)"
+              >
+                Cerrar
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
