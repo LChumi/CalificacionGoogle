@@ -1,0 +1,62 @@
+<div class="section bg-gray-100 py-8 relative z-10">
+  <div class="container mx-auto">
+    <div class="card bg-white shadow-md">
+      <div class="card-body">
+        <h5 class="card-title text-center text-lg font-semibold">
+          CALIFICACIONES A EMPLEADOS
+        </h5>
+        <p class="text-sm text-gray-600 text-center">
+          LISTA DE CALIFICACIONES A EMPLEADOS
+        </p>
+        <button
+          class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded"
+          (click)="descargarExcel()"
+        >
+          Descargar Excel
+        </button>
+
+        <div class="overflow-x-auto mt-4">
+          <div class="table-container  justify-center items-center">
+            <table class="table-auto bg-white md:table-fixed">
+              <thead class="bg-sky-500">
+                <tr>
+                  <th class="px-4 py-4 md:px-4 md:py-2">Fecha</th>
+                  <th class="px-4 py-4 md:px-4 md:py-2">Colaborador</th>
+                  <th class="px-4 py-4 md:px-4 md:py-2">Calificación</th>
+                  <th class="px-4 py-4 md:px-4 md:py-2">Cliente</th>
+                  <th class="px-4 py-4 md:px-4 md:py-2">Observación</th>
+                  <th class="px-4 py-4 md:px-4 md:py-2">Acepta Políticas</th>
+                  <th class="px-4 py-4 md:px-4 md:py-2"></th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (calificacion of calificaciones; track calificacion.id) {
+                <tr class="hover:bg-gray-100">
+                  <td class="border px-2 py-2 md:px-4 md:py-2 whitespace-no-wrap" scope="row">
+                    {{ calificacion.fecha }}
+                  </td>
+                  <td class="border px-2 py-2 md:px-4 md:py-2 whitespace-no-wrap">
+                    {{ calificacion.empleado }}
+                  </td>
+                  <td class="border px-2 py-2 md:px-4 md:py-2 whitespace-no-wrap">
+                    {{ calificacion.calificacionEnum }}
+                  </td>
+                  <td class="border px-2 py-2 md:px-4 md:py-2 whitespace-no-wrap">
+                    {{ calificacion.cliente }}
+                  </td>
+                  <td class="border px-2 py-2 md:px-4 md:py-2 whitespace-no-wrap">
+                    {{ calificacion.observacion }}
+                  </td>
+                  <td class="border px-2 py-2 md:px-4 md:py-2 whitespace-no-wrap">
+                    {{ calificacion.aceptaPoliticas }}
+                  </td>
+                </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

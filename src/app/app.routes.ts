@@ -23,8 +23,20 @@ export const routes: Routes = [
         title: 'Home',
         loadComponent: () => import('./views/home/home.component'),
       },
+      {
+        path: 'inicio',
+        title: 'Inicio',
+        loadComponent: () => import('./views/index/index.component')
+      },
+      {
+        path:'calificaciones',
+        title: 'Calificaciones',
+        loadComponent: () => import('./views/listado-calificacion/listado-calificacion.component')
+      },
+      {path:'', redirectTo:'inicio',pathMatch:'full'},
+      {path:'**', redirectTo:'inicio',pathMatch:'full'},
     ],
   },
-  {path: '',redirectTo: 'auth/:id',pathMatch:'full'},
-  {path: '**',redirectTo: 'auth/:id',pathMatch: 'full',},
+  {path:'',redirectTo:'cumple/inicio',pathMatch:'full'}
+
 ];

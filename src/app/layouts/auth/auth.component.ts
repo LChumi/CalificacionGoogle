@@ -5,7 +5,10 @@ import { RouterOutlet } from '@angular/router';
   standalone: true,
   imports: [RouterOutlet],
   templateUrl: './auth.component.html',
-  styleUrl: './auth.component.css'
+  styleUrl: './auth.component.css',
+  host:{
+    '[attr.auth-component]': 'true'
+  }
 })
 export default class AuthComponent {
 

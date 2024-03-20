@@ -9,18 +9,26 @@
             <img src="assets/images/logo.png" alt="LOGO" class="mx-auto w-32 mb-5" />
           </div>
           <div class="text-center mb-10">
-            <h1 class="text-blueGray-500 text-2xl font-medium mb-5"> INICIE SESION CON  </h1>
+            <h1 class="text-blueGray-500 text-2xl font-medium mb-5"> INICIE SESION CON SU CEDULA </h1>
           </div>
-          <div class="btn-wrapper text-center">
+
+          <div class="relative flex items-center justify-center mb-6">
+            <input
+              [(ngModel)]="cedula"
+              class="shadow appearance-none border rounded-l w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="cedula"
+              type="text"
+              pattern="[0-9]*"
+              placeholder="Ingrese su cedula"
+            >
             <button
-              class="bg-white active:bg-blue-300 text-blueGray-700 font-normal px-20 py-8 rounded outline-none focus:outline-none mr-1 mb-1 uppercase shadow hover:shadow-md inline-flex items-center font-semibold text-xl ease-linear transition-all duration-250 "
-              type="button"
+              class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded-r"
               (click)="login()"
             >
-              <img src="assets/images/google.svg" alt="..." class="w-18 mr-5"  />
-              Google
+              Ingresar
             </button>
           </div>
+
           <hr class="mt-6 border-b-1 border-blueGray-300" />
         </div>
       </div>

@@ -1,5 +1,4 @@
 export const environment = {
-  /* apiUrlBase: `http://localhost`   //se usa asi environment.apiUrlBase
-  production: true
-  */
+  apiUrlBase: `http://192.168.112.36:7569/`,
+  production: false
 };
