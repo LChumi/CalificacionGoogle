@@ -7,25 +7,27 @@
           <h1 class="text-gray-800 text-2xl font-medium">Su opinión es valiosa para Importadora Cumpleaños, ¡gracias!
           </h1>
         </div>
-        @if (iconoVisible) {
-        <div class="relative flex flex-col items-center justify-center mb-6">
-          <h1 class="text-gray-800 text-sm font-medium mt-2">Desea cambiar de usuario</h1>
-          <button
-            class="mt-2 inline-flex items-center justify-center px-2 py-2 text-black bg-sky-500 rounded-md hover:bg-sky-200 focus:outline-none focus:ring focus:ring-sky-300 focus:ring-opacity-50"
-            (click)="logout()">
-            <svg class="w-6 h-6 mr-2 text-gray-800 dark:text-black" aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M16 12H4m12 0-4 4m4-4-4-4m3-4h2a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3h-2" />
-            </svg>
-            Cerrar Sesión
-          </button>
-        </div>
-        }
-
         <div class="relative flex flex-col items-center justify-center mb-6 text-sky-500">
-          <a href="https://www.google.com" target="_self">Puede continuar su navegación aquí</a>
+          <a href="https://xn--cumpleaos-r6a.store/" target="_self" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md shadow-md inline-flex items-center justify-center transition duration-300 ease-in-out" >Visita nuestra pagina web</a>
         <hr class="mt-6 border-b-1 border-gray-300" />
+        <span>Siguenos en nuestras redes </span>
+        <app-footer class="px-6 py-6"></app-footer>
+
+        @if (iconoVisible) {
+          <div class="relative flex flex-col items-center justify-center mb-6">
+            <h1 class="text-gray-800 text-sm font-medium mt-2">Desea cambiar de usuario</h1>
+            <button
+              class="mt-2 inline-flex items-center justify-center px-2 py-2 text-black bg-sky-500 rounded-md hover:bg-sky-200 focus:outline-none focus:ring focus:ring-sky-300 focus:ring-opacity-50"
+              (click)="logout()">
+              <svg class="w-6 h-6 mr-2 text-gray-800 dark:text-black" aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M16 12H4m12 0-4 4m4-4-4-4m3-4h2a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3h-2" />
+              </svg>
+              Cerrar Sesión
+            </button>
+          </div>
+          }
       </div>
     </div>
   </div>
