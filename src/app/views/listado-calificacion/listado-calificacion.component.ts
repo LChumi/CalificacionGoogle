@@ -7,7 +7,11 @@ import { Calificacion } from '../../core/interfaces/calificacion';
   standalone: true,
   imports: [],
   templateUrl: './listado-calificacion.component.html',
-  styles:``
+  styles:`
+  .nowrap {
+    white-space: nowrap;
+  }
+  `
 })
 export default class ListadoCalificacionComponent implements OnInit{
 
