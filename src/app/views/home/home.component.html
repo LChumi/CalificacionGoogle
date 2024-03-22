@@ -1,5 +1,6 @@
 
-  <div class="container mx-auto px-4">
+<div class="flex justify-center items-center h-screen bg-gray-100">
+   <div class="container mx-auto px-4">
     <div class="flex content-center items-center justify-center">
       <div class="w-full lg:w-6/12 px-4">
         <div
@@ -15,7 +16,7 @@
             <p class="uppercase">Califica la calidad de atencion recibida por parte de:</p>
             <p>{{ empleado }}</p>
             <img
-              class="w-24 h-24 rounded-full mx-auto mb-4"
+              class="w-28 h-28 rounded-full mx-auto mb-4"
               alt="foto-perfil"
               [src]="imageDir"
             />
@@ -67,15 +68,18 @@
                 placeholder="Sugerencia"
               />
             </div>
-            <div class="text-center mt-6">
-              <button
-                type="button"
-                class="bg-blue-500 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded-3xl shadow hover:shadow-lg outline-none focus:outline-none w-full ease-linear transition-all duration-150"
-                (click)="guardarCalificacion()"
-              >
-                Enviar calificacion
-              </button>
-            </div>
+              <div class="text-center mt-6">
+                @if (aceptaPoliticas) {
+                  <button
+                  type="button"
+                  class="bg-blue-500 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded-3xl shadow hover:shadow-lg outline-none focus:outline-none w-full ease-linear transition-all duration-150"
+                  (click)="guardarCalificacion()"
+                >
+                  Enviar calificacion
+                </button>
+                }
+                
+              </div>
             <div class="text-center mt-3">
               <input
                 type="checkbox"
@@ -100,6 +104,8 @@
   </div>
 
 
+</div>
+ 
 <!-- Main modal -->
 <div
   [ngClass]="{ 'hidden': !ventanaPolitica }"

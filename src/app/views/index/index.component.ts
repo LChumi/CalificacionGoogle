@@ -5,7 +5,7 @@ import { FooterComponent } from '../../shared/footer/footer.component';
 
 @Component({
   standalone: true,
-  imports: [RouterLink,FooterComponent],
+  imports: [RouterLink],
   templateUrl: './index.component.html',
   styles: ``
 })

@@ -70,7 +70,7 @@ export default class HomeComponent implements OnInit{
     }
     this.calificacion.cliente=this.name || 'Usuario';
     this.calificacion.empleado=this.empleado;
-    this.calificacion.observacion=this.observacion;
+    this.calificacion.observacion=this.observacion?.toUpperCase();
     this.calificacion.calificacionEnum=this.calificacionEnum;
     this.calificacion.aceptaPoliticas=this.aceptaPoliticas;
 
@@ -91,6 +91,8 @@ export default class HomeComponent implements OnInit{
   }
 
   traerImagen(){
+    this.empleado = sessionStorage.getItem('empleado') ?? '';
+    this.imagen= sessionStorage.getItem('imagen') ?? '';
     if(/SQUIÑONEZ/.test(this.imagen)){
       this.imagen='SQUINONEZ';
     }
