@@ -23,6 +23,7 @@
             <thead class="bg-sky-500">
               <tr>
                 <th class="px-4 py-2">Fecha</th>
+                <th class="px-4 py-2">Hora</th>
                 <th class="px-4 py-2">Colaborador</th>
                 <th class="px-4 py-2">Calificación</th>
                 <th class="px-4 py-2">Cliente</th>
@@ -35,6 +36,7 @@
               @for (calificacion of calificaciones; track calificacion.id) {
               <tr class="bg-base-200 bg-cyan-200">
                 <td class="px-4 py-2 nowrap">{{ calificacion.fecha }}</td>
+                <td class="px-4 py-2 nowrap">{{ calificacion.hora }}</td>
                 <td class="px-4 py-2 nowrap">{{ calificacion.empleado }}</td>
                 <td class="px-4 py-2 nowrap">{{ calificacion.calificacionEnum }}</td>
                 <td class="px-4 py-2 nowrap">{{ calificacion.cliente }}</td>
