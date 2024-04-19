@@ -3,6 +3,7 @@
 export class Calificacion {
   id?: number;
   fecha?: string;
+  hora?: string;
   cliente?: string;
   empleado?: string;
   observacion?: string;

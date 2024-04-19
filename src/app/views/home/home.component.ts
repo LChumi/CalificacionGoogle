@@ -1,6 +1,6 @@
-import { EmpleadoService } from './../../core/services/empleado.service';
-import { Calificacion } from './../../core/interfaces/calificacion';
-import { CalificacionService } from './../../core/services/calificacion.service';
+import { EmpleadoService } from '../../core/services/empleado.service';
+import { Calificacion } from '../../core/interfaces/calificacion';
+import { CalificacionService } from '../../core/services/calificacion.service';
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -68,11 +68,14 @@ export default class HomeComponent implements OnInit{
       alert('Por favor agrege una calificacion');
       return;
     }
+    const horaActual = new Date();
     this.calificacion.cliente=this.name || 'Usuario';
     this.calificacion.empleado=this.empleado;
     this.calificacion.observacion=this.observacion?.toUpperCase();
     this.calificacion.calificacionEnum=this.calificacionEnum;
     this.calificacion.aceptaPoliticas=this.aceptaPoliticas;
+    this.calificacion.hora= horaActual.toLocaleTimeString();
+    localStorage.setItem("acepta",JSON.stringify(this.aceptaPoliticas))
 
     this.calificacionService.guardar(this.calificacion).subscribe({
       next:(calificacion : Calificacion) => {
@@ -91,6 +94,11 @@ export default class HomeComponent implements OnInit{
   }
 
   traerImagen(){
+    const aceptaPoliticas = localStorage.getItem('acepta');
+    console.log(aceptaPoliticas)
+    if(aceptaPoliticas !==null){
+      this.aceptaPoliticas= true;
+    }
     this.empleado = sessionStorage.getItem('empleado') ?? '';
     this.imagen= sessionStorage.getItem('imagen') ?? '';
     if(/SQUIÑONEZ/.test(this.imagen)){
