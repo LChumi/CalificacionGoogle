@@ -32,6 +32,8 @@ export default class HomeComponent implements OnInit{
   aceptaPoliticas: boolean = false;
   isImage:boolean = false;
 
+  botonBloquear:boolean = false;
+
   constructor(
     private calificacionService: CalificacionService,
     private empleadoService: EmpleadoService,
@@ -64,6 +66,7 @@ export default class HomeComponent implements OnInit{
   }
 
   guardarCalificacion(){
+    this.botonBloquear=!this.botonBloquear;
     if(!this.calificacion){
       alert('Por favor agrege una calificacion');
       return;
@@ -84,7 +87,8 @@ export default class HomeComponent implements OnInit{
         }
       },error:(error) => {
         console.error(error)
-      }
+          this.botonBloquear=false;
+        }
     }
     )
   }
