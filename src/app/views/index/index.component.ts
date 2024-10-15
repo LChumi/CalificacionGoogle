@@ -1,7 +1,6 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { FooterComponent } from '../../shared/footer/footer.component';
 
 @Component({
   standalone: true,
@@ -30,5 +29,5 @@ export default class IndexComponent implements OnInit{
     sessionStorage.clear();
     localStorage.clear();
   }
-  
+
 }

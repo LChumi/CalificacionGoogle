@@ -2,10 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EmpleadoService } from '../../core/services/empleado.service';
 import { Usuario } from '../../core/interfaces/usuario';
-import { ClienteService } from '../../core/services/cliente.service';
-import { Cliente } from '../../core/interfaces/cliente';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import {SriService} from "../../core/services/sri.service";
 
 @Component({
   standalone: true,
@@ -15,14 +14,13 @@ import { FormsModule } from '@angular/forms';
 })
 export default class LoginComponent implements OnInit {
   idEmpleado: any;
-  imageUrl!: string;
   cedula!: string;
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private empleadoService: EmpleadoService,
-    private clienteService: ClienteService
+    private sriservice:SriService
   ) {
   }
   ngOnInit(): void {
@@ -78,12 +76,12 @@ export default class LoginComponent implements OnInit {
   }
 
   obtenerCliente(id: any) {
-    this.clienteService.getCliente(id).subscribe({
-      next: (cliente: Cliente) => {
-        if(cliente){
-          const nombres = cliente.cliNombre.split(' ');
-        const nombre = nombres[0]; // Primer nombre
-        const segundoNombre =
+    this.sriservice.getNombres(id).subscribe({
+      next: (data) => {
+        if(data){
+          const nombres = data.split(' ');
+          const nombre = nombres[0]; // Primer nombre
+          const segundoNombre =
             nombres.length > 2
               ? nombres[2]
               : nombres.length > 1
@@ -105,5 +103,5 @@ export default class LoginComponent implements OnInit {
       },
     });
   }
-  
+
 }
