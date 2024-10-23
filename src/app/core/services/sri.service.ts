@@ -28,11 +28,17 @@ export class SriService {
     return this.http.get(`${this.baseUrl}ced-ruc/${cedula}/${tipo}`, { responseType: 'text' })
       .pipe(
         map(response => {
-          const nombres = response.split('|')[0]; // Obtiene la parte antes del '|'
-          return nombres.trim(); // Elimina espacios en blanco
+          const nombres = response.split('|')[0]; // Obtiene la parte antes del '|' Elimina espacios en blanco
+          return this.formatearNombre(nombres.trim())
         })
       );
   }
 
+  private formatearNombre(data: string): string {
+    const nombres = data.split(' ');
+    const nombre = nombres[0]; // Primer nombre
+    const segundoNombre = nombres.length > 2 ? nombres[2] : nombres.length > 1 ? nombres[1] : ''; // Segundo nombre
+    return segundoNombre ? `${nombre} ${segundoNombre}` : nombre;
+  }
 
 }

@@ -1,10 +1,12 @@
 import { EmpleadoService } from '../../core/services/empleado.service';
 import { Calificacion } from '../../core/interfaces/calificacion';
 import { CalificacionService } from '../../core/services/calificacion.service';
-import { Component, OnInit } from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
+import {SriService} from "../../core/services/sri.service";
+import {ClienteService} from "../../core/services/cliente.service";
 
 @Component({
   standalone: true,
@@ -21,6 +23,10 @@ import { Router, RouterModule } from '@angular/router';
   `,
 })
 export default class HomeComponent implements OnInit{
+
+  sriservice = inject(SriService)
+  clienteservice= inject(ClienteService)
+
   name= localStorage.getItem('cliente') ?? '';
   imageDir?:string ='assets/images/user.png';
   imagen= sessionStorage.getItem('imagen') ?? '';
@@ -45,6 +51,8 @@ export default class HomeComponent implements OnInit{
     this.calificacion= new Calificacion();
     if(this.name == ''){
       this.logout()
+    }else {
+      this.validarNombre()
     }
     setTimeout(() => {
       this.traerImagen()
@@ -129,5 +137,39 @@ export default class HomeComponent implements OnInit{
   esNombre(dato:string){
     return isNaN(Number(dato));
   }
+
+  validarNombre() {
+    const isOnlyNumber = /^\d+$/.test(this.name);
+
+    if (isOnlyNumber) {
+      this.sriservice.getNombres(this.name).subscribe({
+        next: (nombreCompleto) => {
+          // Si nombreCompleto está vacío, sigue con getCliente
+          if (!nombreCompleto) {
+            console.warn('Nombre obtenido es vacío, llamando a getCliente.');
+          } else {
+            this.name = nombreCompleto;
+            localStorage.setItem('cliente', this.name);
+          }
+
+          // Llama a getCliente independientemente del resultado
+          this.clienteservice.getCliente(this.name || String(this.name)).subscribe({
+            next: (nombreCompleto) => {
+              this.name = nombreCompleto;
+              localStorage.setItem('cliente', this.name);
+            },
+            error: (error) => {
+              console.error('Error al obtener el cliente:', error);
+            }
+          });
+        },
+        error: (error) => {
+          localStorage.setItem('cliente', String(this.name));
+          console.error('Error al obtener el nombre:', error);
+        },
+      });
+    }
+  }
+
 
 }

@@ -77,29 +77,14 @@ export default class LoginComponent implements OnInit {
 
   obtenerCliente(id: any) {
     this.sriservice.getNombres(id).subscribe({
-      next: (data) => {
-        if(data){
-          const nombres = data.split(' ');
-          const nombre = nombres[0]; // Primer nombre
-          const segundoNombre =
-            nombres.length > 2
-              ? nombres[2]
-              : nombres.length > 1
-              ? nombres[1]
-              : ''; // Segundo nombre, si existe
-        const nombreCompleto = segundoNombre ? `${nombre} ${segundoNombre}` : nombre;
-        console.log(nombreCompleto)
-        localStorage.setItem('cliente', nombreCompleto);
+      next: (nombreCompleto) => {
+        localStorage.setItem('cliente', nombreCompleto || String(id));
         this.router.navigate(['cumple/home']);
-        }else{
-          localStorage.setItem('cliente', String(id));
-        this.router.navigate(['cumple/home']);
-        }
       },
       error: (error) => {
         localStorage.setItem('cliente', String(id));
-        this.router.navigate(['cumple/home']);
         console.error('Error al obtener el cliente:', error);
+        this.router.navigate(['cumple/home']);
       },
     });
   }
