@@ -25,7 +25,7 @@ export class SriService {
       tipo = 'P';
     }
 
-    return this.http.get(`${this.baseUrl}ced-ruc/${cedula}/${tipo}`, { responseType: 'text' })
+    return this.http.get(`${this.baseUrl}cliente/${cedula}/${tipo}`, { responseType: 'text' })
       .pipe(
         map(response => {
           const nombres = response.split('|')[0]; // Obtiene la parte antes del '|' Elimina espacios en blanco
