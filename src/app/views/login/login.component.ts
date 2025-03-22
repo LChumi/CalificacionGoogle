@@ -66,9 +66,7 @@ export default class LoginComponent implements OnInit {
               : nombres.length > 1
               ? nombres[1]
               : ''; // Segundo nombre, si existe
-          sessionStorage.setItem(
-            'empleado',
-            nombre + (segundoNombre ? ' ' + segundoNombre : '')
+          sessionStorage.setItem('empleado', nombre + (segundoNombre ? ' ' + segundoNombre : '')
           );
         }
       },

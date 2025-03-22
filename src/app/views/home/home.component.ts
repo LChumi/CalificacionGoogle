@@ -13,13 +13,13 @@ import {ClienteService} from "../../core/services/cliente.service";
   imports: [CommonModule, FormsModule,RouterModule],
   templateUrl: './home.component.html',
   styles: `
-  .bg-text-color-white:focus {
-    color: white;
-}
+    .bg-text-color-white:focus {
+      color: white;
+    }
 
-.bg-text-color-white:active {
-    color: white;
-}
+    .bg-text-color-white:active {
+      color: white;
+    }
   `,
 })
 export default class HomeComponent implements OnInit{
