@@ -1,7 +1,7 @@
 import {EmpleadoService} from '../../core/services/empleado.service';
 import {Calificacion} from '../../core/interfaces/calificacion';
 import {CalificacionService} from '../../core/services/calificacion.service';
-import {Component, inject, OnInit} from '@angular/core';
+import {AfterViewInit, Component, inject, OnInit, ViewChild} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {Router, RouterModule} from '@angular/router';
@@ -9,10 +9,11 @@ import {SriService} from "../../core/services/sri.service";
 import {Cliente} from "../../core/interfaces/cliente";
 import {Empleado} from "../../core/interfaces/empleado";
 import {esNombre} from "../../utils/stringUtils";
+import {RatingsButtonsComponent} from "../../shared/components/ratings-buttons/ratings-buttons.component";
 
 @Component({
   standalone: true,
-  imports: [CommonModule, FormsModule,RouterModule],
+  imports: [CommonModule, FormsModule, RouterModule, RatingsButtonsComponent],
   templateUrl: './home.component.html',
   styles: `
     .bg-text-color-white:focus {
@@ -24,7 +25,9 @@ import {esNombre} from "../../utils/stringUtils";
     }
   `,
 })
-export default class HomeComponent implements OnInit{
+export default class HomeComponent implements OnInit, AfterViewInit {
+
+  @ViewChild(RatingsButtonsComponent) ratings!: RatingsButtonsComponent
 
   sriservice = inject(SriService)
   calificacionService = inject(CalificacionService)
@@ -41,7 +44,7 @@ export default class HomeComponent implements OnInit{
   calificacionEnum:string='';
   ventanaPolitica: boolean= false;
   aceptaPoliticas: boolean = false;
-  isImage:boolean = false;
+  visibleRatingButtons:boolean = false;
 
   botonBloquear:boolean = false;
 
@@ -61,10 +64,6 @@ export default class HomeComponent implements OnInit{
 
   logout() {
     this.goToIndex()
-  }
-
-  selecionarCalificacion(calificacion: string) {
-    this.calificacionEnum=calificacion;
   }
 
   guardarCalificacion(){
@@ -161,4 +160,10 @@ export default class HomeComponent implements OnInit{
   }
 
   protected readonly esNombre = esNombre;
+
+  ngAfterViewInit(): void {
+    this.ratings.onChangeRating.subscribe(cal => {
+      this.calificacionEnum = cal;
+    })
+  }
 }

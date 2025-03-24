@@ -23,36 +23,11 @@
           </div>
           <div>
             <div class="bg-slate-100 px-6 shadow">
-              <div class="grid grid-cols-1 gap-y-2 justify-start">
-                <button
-                  type="button"
-                  class="text-sm font-medium px-4 py-4 rounded-full transition-colors duration-300 ease-in-out bg-text-color-white bg-yellow-400 hover:bg-yellow-600 focus:outline-none focus:ring focus:ring-yellow-400 focus:ring-opacity-50 active:bg-yellow-100"
-                  (click)="selecionarCalificacion('EXCELENTE')"
-                >
-                  EXCELENTE
-                </button>
-                <button
-                  type="button"
-                  class="text-sm font-medium px-4 py-4 rounded-full transition-colors duration-300 ease-in-out bg-text-color-white bg-green-400 hover:bg-green-600 focus:outline-none focus:ring focus:ring-green-600 focus:ring-opacity-50 active:bg-green-300"
-                  (click)="selecionarCalificacion('BUENO')"
-                >
-                  BUENO
-                </button>
-                <button
-                  type="button"
-                  class="text-sm font-medium px-4 py-4 rounded-full transition-colors duration-300 ease-in-out bg-text-color-white bg-gray-400 hover:bg-gray-600 focus:outline-none focus:ring focus:ring-gray-600 focus:ring-opacity-50 active:bg-gray-300"
-                  (click)="selecionarCalificacion('REGULAR')"
-                >
-                  REGULAR
-                </button>
-                <button
-                  type="button"
-                  class="text-sm font-medium px-4 py-4 rounded-full transition-colors duration-300 ease-in-out bg-text-color-white bg-red-400 hover:bg-red-600 focus:outline-none focus:ring focus:ring-red-700 focus:ring-opacity-50 active:bg-red-400"
-                  (click)="selecionarCalificacion('MALO')"
-                >
-                  MALO
-                </button>
-              </div>
+              @if (visibleRatingButtons){
+                <app-ratings-buttons></app-ratings-buttons>
+              } @else {
+
+              }
 
             </div>
             <div class="relative w-full mb-3">
