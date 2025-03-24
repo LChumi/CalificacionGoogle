@@ -10,10 +10,11 @@ import {Cliente} from "../../core/interfaces/cliente";
 import {Empleado} from "../../core/interfaces/empleado";
 import {esNombre} from "../../utils/stringUtils";
 import {RatingsButtonsComponent} from "../../shared/components/ratings-buttons/ratings-buttons.component";
+import {RatingsStarComponent} from "../../shared/components/ratings-star/ratings-star.component";
 
 @Component({
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule, RatingsButtonsComponent],
+  imports: [CommonModule, FormsModule, RouterModule, RatingsButtonsComponent, RatingsStarComponent],
   templateUrl: './home.component.html',
   styles: `
     .bg-text-color-white:focus {
@@ -28,6 +29,7 @@ import {RatingsButtonsComponent} from "../../shared/components/ratings-buttons/r
 export default class HomeComponent implements OnInit, AfterViewInit {
 
   @ViewChild(RatingsButtonsComponent) ratings!: RatingsButtonsComponent
+  @ViewChild(RatingsStarComponent) stars!: RatingsStarComponent
 
   sriservice = inject(SriService)
   calificacionService = inject(CalificacionService)
@@ -67,9 +69,10 @@ export default class HomeComponent implements OnInit, AfterViewInit {
   }
 
   guardarCalificacion(){
-    if(!this.calificacionEnum){
-      alert('Por favor, seleccione una calificación');
-      return;
+    if ((!this.calificacionEnum || this.calificacionEnum === '') && (!this.rating || this.rating === 0)) {
+      alert('Debe existir al menos una calificación válida: "calificacionEnum" o "rating"');
+    } else {
+      console.log('Validación exitosa');
     }
     this.botonBloquear=!this.botonBloquear;
     localStorage.setItem("acepta",JSON.stringify(this.aceptaPoliticas))
@@ -162,8 +165,18 @@ export default class HomeComponent implements OnInit, AfterViewInit {
   protected readonly esNombre = esNombre;
 
   ngAfterViewInit(): void {
-    this.ratings.onChangeRating.subscribe(cal => {
-      this.calificacionEnum = cal;
-    })
+    if (this.ratings){
+      this.ratings.onChangeRating.subscribe(cal => {
+        this.calificacionEnum = cal;
+      })
+    }
+    if (this.stars) {
+      this.stars.onChangeRatingStar.subscribe(rating => {
+        this.rating = rating;
+      });
+    } else {
+      console.error('El componente o la propiedad onChangeRatingStar no están definidos.');
+    }
   }
+
 }

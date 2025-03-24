@@ -22,14 +22,16 @@
             />
           </div>
           <div>
-            <div class="bg-slate-100 px-6 shadow">
               @if (visibleRatingButtons){
+                <div class="bg-slate-100 px-6 shadow">
                 <app-ratings-buttons></app-ratings-buttons>
-              } @else {
-
+                </div>
+              }@else {
+                <div class="bg-slate-100 px-6 shadow flex justify-center items-center h-full">
+                <app-ratings-star></app-ratings-star>
+                </div>
               }
 
-            </div>
             <div class="relative w-full mb-3">
               <label
                 for="Sugerencia"
