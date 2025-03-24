@@ -1,12 +1,14 @@
-import { EmpleadoService } from '../../core/services/empleado.service';
-import { Calificacion } from '../../core/interfaces/calificacion';
-import { CalificacionService } from '../../core/services/calificacion.service';
+import {EmpleadoService} from '../../core/services/empleado.service';
+import {Calificacion} from '../../core/interfaces/calificacion';
+import {CalificacionService} from '../../core/services/calificacion.service';
 import {Component, inject, OnInit} from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { Router, RouterModule } from '@angular/router';
+import {CommonModule} from '@angular/common';
+import {FormsModule} from '@angular/forms';
+import {Router, RouterModule} from '@angular/router';
 import {SriService} from "../../core/services/sri.service";
-import {ClienteService} from "../../core/services/cliente.service";
+import {Cliente} from "../../core/interfaces/cliente";
+import {Empleado} from "../../core/interfaces/empleado";
+import {esNombre} from "../../utils/stringUtils";
 
 @Component({
   standalone: true,
@@ -25,35 +27,28 @@ import {ClienteService} from "../../core/services/cliente.service";
 export default class HomeComponent implements OnInit{
 
   sriservice = inject(SriService)
-  clienteservice= inject(ClienteService)
+  calificacionService = inject(CalificacionService)
+  empleadoService = inject(EmpleadoService)
+  route = inject(Router)
 
-  name= localStorage.getItem('cliente') ?? '';
-  imageDir?:string ='assets/images/user.png';
-  imagen= sessionStorage.getItem('imagen') ?? '';
-  empleado = sessionStorage.getItem('empleado') ?? '';
-  calificacion?:Calificacion;
-  observacion?:string='';
-  calificacionEnum?:string='';
+  cli_nombre= '';
+  cli_cedula='';
+  imageDir:string ='assets/images/user.png';
+  usrId= '';
+  emp_nombre = '';
+  observacion:string='';
+  rating: number = 0;
+  calificacionEnum:string='';
   ventanaPolitica: boolean= false;
   aceptaPoliticas: boolean = false;
   isImage:boolean = false;
 
   botonBloquear:boolean = false;
 
-  constructor(
-    private calificacionService: CalificacionService,
-    private empleadoService: EmpleadoService,
-    private route:Router
-  ) {
+  constructor() {}
 
-  }
   ngOnInit(): void {
-    this.calificacion= new Calificacion();
-    if(this.name == ''){
-      this.logout()
-    }else {
-      this.validarNombre()
-    }
+    this.getData()
     setTimeout(() => {
       this.traerImagen()
     },1000)
@@ -70,25 +65,35 @@ export default class HomeComponent implements OnInit{
 
   selecionarCalificacion(calificacion: string) {
     this.calificacionEnum=calificacion;
-    console.log(calificacion)
   }
 
   guardarCalificacion(){
-    this.botonBloquear=!this.botonBloquear;
-    if(!this.calificacion){
-      alert('Por favor agrege una calificacion');
+    if(!this.calificacionEnum){
+      alert('Por favor, seleccione una calificación');
       return;
     }
-    const horaActual = new Date();
-    this.calificacion.cliente=this.name || 'Usuario';
-    this.calificacion.empleado=this.empleado;
-    this.calificacion.observacion=this.observacion?.toUpperCase();
-    this.calificacion.calificacionEnum=this.calificacionEnum;
-    this.calificacion.aceptaPoliticas=this.aceptaPoliticas;
-    this.calificacion.hora= horaActual.toLocaleTimeString();
+    this.botonBloquear=!this.botonBloquear;
     localStorage.setItem("acepta",JSON.stringify(this.aceptaPoliticas))
+    const empleado: Empleado = {
+      id : this.usrId,
+      nombre : this.emp_nombre
+    }
+    const cliente: Cliente ={
+      id : this.cli_cedula,
+      nombre: this.cli_nombre,
+      aceptaPolicies: this.aceptaPoliticas
+    }
+    const calificacion : Calificacion = {
+      fecha: null,
+      hora: null,
+      cliente: cliente,
+      empleado: empleado,
+      observacion: this.observacion,
+      calificacion: this.calificacionEnum,
+      rating: this.rating,
+    }
 
-    this.calificacionService.guardar(this.calificacion).subscribe({
+    this.calificacionService.saveRating(calificacion).subscribe({
       next:(calificacion : Calificacion) => {
         if(calificacion){
           this.goToIndex()
@@ -106,70 +111,54 @@ export default class HomeComponent implements OnInit{
   }
 
   traerImagen(){
-    const aceptaPoliticas = localStorage.getItem('acepta');
-    console.log(aceptaPoliticas)
-    if(aceptaPoliticas !==null){
-      this.aceptaPoliticas= true;
+    if(/SQUIÑONEZ/.test(this.usrId)){
+      this.usrId='SQUINONEZ';
     }
-    this.empleado = sessionStorage.getItem('empleado') ?? '';
-    this.imagen= sessionStorage.getItem('imagen') ?? '';
-    if(/SQUIÑONEZ/.test(this.imagen)){
-      this.imagen='SQUINONEZ';
-    }
-    this.empleadoService.getImagen(this.imagen+'.jpg').subscribe(
-      data => {
+    this.empleadoService.getImagen(this.usrId+'.jpg').subscribe({
+      next: data => {
         if(data){
-          const objectUrl = URL.createObjectURL(data);
-          this.imageDir=objectUrl;
-          sessionStorage.setItem("imagenUrl",String(objectUrl))
-        }else{
-          console.log('error');
-          this.imageDir='assets/images/user.png'
+          this.imageDir=URL.createObjectURL(data);
         }
       },
-      error => {
-        console.log('Error al cargar la imagen:', error);
-        this.imageDir = 'assets/images/user.png';
+      error: error => {
+        console.error(error);
       }
-    )
+    })
   }
 
-  esNombre(dato:string){
-    return isNaN(Number(dato));
-  }
 
   validarNombre() {
-    const isOnlyNumber = /^\d+$/.test(this.name);
-
+    const isOnlyNumber = /^\d+$/.test(this.cli_nombre);
     if (isOnlyNumber) {
-      this.sriservice.getNombres(this.name).subscribe({
+      this.sriservice.getNombres(this.cli_nombre).subscribe({
         next: (nombreCompleto) => {
-          // Si nombreCompleto está vacío, sigue con getCliente
-          if (!nombreCompleto) {
-            console.warn('Nombre obtenido es vacío, llamando a getCliente.');
-          } else {
-            this.name = nombreCompleto;
-            localStorage.setItem('cliente', this.name);
+          if (nombreCompleto) {
+            this.cli_nombre = nombreCompleto;
+            localStorage.setItem('cliente', this.cli_nombre);
           }
-
-          // Llama a getCliente independientemente del resultado
-          this.clienteservice.getCliente(this.name || String(this.name)).subscribe({
-            next: (nombreCompleto) => {
-              this.name = nombreCompleto;
-              localStorage.setItem('cliente', this.name);
-            },
-            error: (error) => {
-              console.error('Error al obtener el cliente:', error);
-            }
-          });
         },
         error: (error) => {
-          localStorage.setItem('cliente', String(this.name));
           console.error('Error al obtener el nombre:', error);
         },
       });
     }
   }
 
+  getData(){
+    this.cli_cedula= localStorage.getItem('cli_id') ?? '';
+    this.cli_nombre= localStorage.getItem('cli_nombre') ?? '';
+    this.emp_nombre = sessionStorage.getItem('emp_nombre') ?? '';
+    this.usrId= sessionStorage.getItem('emp_id') ?? '';
+    const acceptPolicies = localStorage.getItem('acepta');
+    if(acceptPolicies !==null){
+      this.aceptaPoliticas= true;
+    }
+    if(this.cli_nombre == '' && this.cli_cedula == ''){
+      this.logout()
+    }else {
+      this.validarNombre()
+    }
+  }
 
+  protected readonly esNombre = esNombre;
 }

@@ -1,4 +1,3 @@
-
 export interface Usuario {
   usr_codigo:      number;
   usr_id:          string;

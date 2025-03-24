@@ -9,7 +9,7 @@
           LISTA DE CALIFICACIONES A COLABORADORES
         </p>
         <button class="bg-green-600 hover:bg-green-500 text-white py-2 px-4 rounded flex items-center space-x-2"
-          (click)="descargarExcel()">
+          >
           <span class="text-base">Descargar Excel</span>
           <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
             width="24" height="24" fill="none" viewBox="0 0 24 24">
@@ -18,36 +18,7 @@
           </svg>
         </button>
 
-        <div class="overflow-x-auto py-4">
-          <table class="table w-full">
-            <thead class="bg-sky-500">
-              <tr>
-                <th class="px-4 py-2">Fecha</th>
-                <th class="px-4 py-2">Hora</th>
-                <th class="px-4 py-2">Colaborador</th>
-                <th class="px-4 py-2">Calificación</th>
-                <th class="px-4 py-2">Cliente</th>
-                <th class="px-4 py-2">Observación</th>
-                <th class="px-4 py-2">Acepta Políticas</th>
-                <th class="px-4 py-2"></th>
-              </tr>
-            </thead>
-            <tbody>
-              @for (calificacion of calificaciones; track calificacion.id) {
-              <tr class="bg-base-200 bg-cyan-200">
-                <td class="px-4 py-2 nowrap">{{ calificacion.fecha }}</td>
-                <td class="px-4 py-2 nowrap">{{ calificacion.hora }}</td>
-                <td class="px-4 py-2 nowrap">{{ calificacion.empleado }}</td>
-                <td class="px-4 py-2 nowrap">{{ calificacion.calificacionEnum }}</td>
-                <td class="px-4 py-2 nowrap">{{ calificacion.cliente }}</td>
-                <td class="px-4 py-2 nowrap">{{ calificacion.observacion }}</td>
-                <td class="px-4 py-2 nowrap">{{ calificacion.aceptaPoliticas }}</td>
-                <td class="px-4 py-2"></td>
-              </tr>
-              }
-            </tbody>
-          </table>
-        </div>
+
 
     </div>
   </div>

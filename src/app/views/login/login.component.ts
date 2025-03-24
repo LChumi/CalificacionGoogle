@@ -5,6 +5,7 @@ import { Usuario } from '../../core/interfaces/usuario';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {SriService} from "../../core/services/sri.service";
+import {formatearNombre} from "../../utils/stringUtils";
 
 @Component({
   standalone: true,
@@ -28,8 +29,8 @@ export default class LoginComponent implements OnInit {
       this.idEmpleado = params.get('id');
     });
     this.obtenerEmpleado(this.idEmpleado);
-    if(localStorage.getItem('cliente')){
-      this.router.navigate(['cumple/home']);
+    if(localStorage.getItem('cli_nombre')){
+      this.router.navigate(['cumple/home']).then(r => {});
     }
   }
 
@@ -57,17 +58,9 @@ export default class LoginComponent implements OnInit {
     this.empleadoService.getUsuario(id).subscribe({
       next: (usuario: Usuario) => {
         if (usuario) {
-          sessionStorage.setItem('imagen', String(usuario.usr_id));
-          const nombres = usuario.usr_nombre.split(' ');
-          const nombre = nombres[0]; // Primer nombre
-          const segundoNombre =
-            nombres.length > 2
-              ? nombres[2]
-              : nombres.length > 1
-              ? nombres[1]
-              : ''; // Segundo nombre, si existe
-          sessionStorage.setItem('empleado', nombre + (segundoNombre ? ' ' + segundoNombre : '')
-          );
+          sessionStorage.setItem('emp_id', String(usuario.usr_id));
+          const nombre = formatearNombre(usuario.usr_nombre)
+          sessionStorage.setItem('emp_nombre', nombre);
         }
       },
     });
@@ -76,13 +69,14 @@ export default class LoginComponent implements OnInit {
   obtenerCliente(id: any) {
     this.sriservice.getNombres(id).subscribe({
       next: (nombreCompleto) => {
-        localStorage.setItem('cliente', nombreCompleto || String(id));
-        this.router.navigate(['cumple/home']);
+        localStorage.setItem('cli_nombre', nombreCompleto || String(id));
+        localStorage.setItem('cli_id', id);
+        this.router.navigate(['cumple/home']).then(r => {});
       },
       error: (error) => {
         localStorage.setItem('cliente', String(id));
         console.error('Error al obtener el cliente:', error);
-        this.router.navigate(['cumple/home']);
+        this.router.navigate(['cumple/home']).then(r => {});
       },
     });
   }

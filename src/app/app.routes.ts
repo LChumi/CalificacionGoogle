@@ -37,6 +37,6 @@ export const routes: Routes = [
       {path:'**', redirectTo:'inicio',pathMatch:'full'},
     ],
   },
-  {path:'',redirectTo:'cumple/inicio',pathMatch:'full'}
-
+  {path:'',redirectTo:'cumple/inicio',pathMatch:'full'},
+  {path:'**',redirectTo:'cumple/inicio',pathMatch:'full'}
 ];

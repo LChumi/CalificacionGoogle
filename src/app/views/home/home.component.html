@@ -8,13 +8,13 @@
         >
           <div class="text-center mt-8">
             <p class="text-3xl font-bold text-blueGray-800 mb-2">Bienvenido</p>
-            @if (esNombre(name)) {
-              <p class="text-2xl font-semibold">{{ name }}</p>
+            @if (esNombre(cli_nombre)) {
+              <p class="text-2xl font-semibold">{{ cli_nombre }}</p>
             }
 
 
             <p class="uppercase">Califica la calidad de atencion recibida por parte de:</p>
-            <p>{{ empleado }}</p>
+            <p>{{ emp_nombre }}</p>
             <img
               class="w-28 h-28 rounded-full mx-auto mb-4"
               alt="foto-perfil"
@@ -91,8 +91,7 @@
                 [(ngModel)]="aceptaPoliticas"
               />
               <label for="acepta"
-                >Al enviar tu opinion aceptas nuestras politicas para la Ley de
-                proteccion de datos
+                >Al enviar su reseña, usted acepta nuestras políticas de Ley de Protección de Datos.
                 <a
                   (click)="mostrarVentana()"
                   class="ml-2 text-blue-600 underline"
