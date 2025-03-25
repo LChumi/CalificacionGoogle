@@ -8,59 +8,57 @@
         <p class="text-sm text-gray-600 text-center">
           LISTA DE CALIFICACIONES A COLABORADORES
         </p>
-        <button class="bg-green-600 hover:bg-green-500 text-white py-2 px-4 rounded flex items-center space-x-2"
-          >
-          <span class="text-base">Descargar Excel</span>
-          <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-            width="24" height="24" fill="none" viewBox="0 0 24 24">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M4 15v2a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3v-2m-8 1V4m0 12-4-4m4 4 4-4" />
+        <button (click)="viewCharts()"
+          class="bg-blue-400 hover:bg-blue-500 text-white py-2 px-4 rounded flex items-center space-x-2">
+          <span class="text-base">Ver Graficos</span>
+          <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15v4m6-6v6m6-4v4m6-6v6M3 11l6-5 6 5 5.5-5.5"/>
           </svg>
         </button>
 
-        <div class="flex justify-center">
-          <canvas #chartCanvas width="400" height="200"></canvas>
-        </div>
-
-
-        <div class="overflow-x-auto py-4">
-          <table class="table w-full">
-            <thead class="bg-sky-500">
-            <tr>
-              <th class="px-4 py-2">Fecha</th>
-              <th class="px-4 py-2">Colaborador</th>
-              <th class="px-4 py-2">Cliente</th>
-              <th class="px-4 py-2">Políticas</th>
-              <th class="px-4 py-2">Calificación</th>
-              <th class="px-4 py-2">Observación</th>
-              <th class="px-4 py-2">Hora</th>
-            </tr>
-            </thead>
-            <tbody>
-              @for (calificacion of calificaciones; track $index) {
-                <tr class="bg-base-200 bg-cyan-200">
-                  <td class="px-4 py-2 nowrap">{{ calificacion.fecha | date: 'dd/MM/yyy' }}</td>
-                  @if (calificacion.empleado && calificacion.empleado.nombre){
-                    <td class="px-4 py-2 nowrap">{{ calificacion.empleado.nombre }}</td>
-                  }
-                  @if (calificacion.cliente && calificacion.cliente.nombre){
-                    <td class="px-4 py-2 nowrap">{{ calificacion.cliente.nombre }}</td>
-                    <td class="px-4 py-2 nowrap">
-                      <div class="flex content-center">
-                        <input type="checkbox" class="shrink-0 mt-0.5 border-gray-200 rounded-sm text-blue-600 focus:ring-blue-500 checked:border-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800" id="hs-checked-checkbox" [checked]="calificacion.cliente.aceptaPolicies">
-                        <label for="hs-checked-checkbox" class="text-sm text-gray-500 ms-3 dark:text-neutral-400">Acepta</label>
-                      </div>
+        @if (!viewChartsDiv){
+          <div class="overflow-x-auto py-4">
+            <table class="table w-full">
+              <thead class="bg-sky-500">
+              <tr>
+                <th class="px-4 py-2">Fecha</th>
+                <th class="px-4 py-2">Colaborador</th>
+                <th class="px-4 py-2">Cliente</th>
+                <th class="px-4 py-2">Políticas</th>
+                <th class="px-4 py-2">Calificación</th>
+                <th class="px-4 py-2">Observación</th>
+                <th class="px-4 py-2">Hora</th>
+              </tr>
+              </thead>
+              <tbody>
+                @for (calificacion of calificaciones; track $index) {
+                  <tr class="bg-base-200 bg-cyan-200">
+                    <td class="px-4 py-2 nowrap">{{ calificacion.fecha | date: 'dd/MM/yyy' }}</td>
+                    @if (calificacion.empleado && calificacion.empleado.nombre){
+                      <td class="px-4 py-2 nowrap">{{ calificacion.empleado.nombre }}</td>
+                    }
+                    @if (calificacion.cliente && calificacion.cliente.nombre){
+                      <td class="px-4 py-2 nowrap">{{ calificacion.cliente.nombre }}</td>
+                      <td class="px-4 py-2 nowrap">
+                        <div class="flex content-center">
+                          <input type="checkbox" class="shrink-0 mt-0.5 border-gray-200 rounded-sm text-blue-600 focus:ring-blue-500 checked:border-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800" id="hs-checked-checkbox" [checked]="calificacion.cliente.aceptaPolicies">
+                          <label for="hs-checked-checkbox" class="text-sm text-gray-500 ms-3 dark:text-neutral-400">Acepta</label>
+                        </div>
                       </td>
-                  }
-                  <td class="px-4 py-2 text-center align-middle">{{calificacion.rating}}</td>
-                  <td class="px-4 py-2 nowrap">{{ calificacion.observacion }}</td>
-                  <td class="px-4 py-2">{{ formatHora(calificacion.hora)}}</td>
-                </tr>
-              }
-            </tbody>
-          </table>
-        </div>
-
+                    }
+                    <td class="px-4 py-2 text-center align-middle">{{calificacion.rating}}</td>
+                    <td class="px-4 py-2 nowrap">{{ calificacion.observacion }}</td>
+                    <td class="px-4 py-2">{{ formatHora(calificacion.hora)}}</td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        } @else {
+          <div class="flex justify-center items-center max-h-screen bg-gray-100">
+            <app-charts></app-charts>
+          </div>
+        }
       </div>
 
     </div>
