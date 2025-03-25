@@ -27,8 +27,8 @@ export default class LoginComponent implements OnInit {
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
       this.idEmpleado = params.get('id');
+      this.obtenerEmpleado(this.idEmpleado);
     });
-    this.obtenerEmpleado(this.idEmpleado);
     if(localStorage.getItem('cli_nombre')){
       this.router.navigate(['cumple/home']).then(r => {});
     }

@@ -42,6 +42,7 @@ export default class HomeComponent implements OnInit, AfterViewInit {
   usrId= '';
   emp_nombre = '';
   observacion:string='';
+  subObservacion: string=''
   rating: number = 0;
   calificacionEnum:string='';
   ventanaPolitica: boolean= false;
@@ -49,6 +50,17 @@ export default class HomeComponent implements OnInit, AfterViewInit {
   visibleRatingButtons:boolean = false;
 
   botonBloquear:boolean = false;
+
+  opciones: string[] = [
+    'Atención de nuestro personal',
+    'Calidad de nuestros productos',
+    'Falta de productos',
+    'Tiempo de espera',
+    'Nuestras Instalaciones'
+  ];
+
+  subOpciones: string[] = ['Pasillos', 'Señalización', 'Baños', 'Estacionamiento'];
+
 
   constructor() {}
 
@@ -69,11 +81,6 @@ export default class HomeComponent implements OnInit, AfterViewInit {
   }
 
   guardarCalificacion(){
-    if ((!this.calificacionEnum || this.calificacionEnum === '') && (!this.rating || this.rating === 0)) {
-      alert('Debe existir al menos una calificación válida: "calificacionEnum" o "rating"');
-    } else {
-      console.log('Validación exitosa');
-    }
     this.botonBloquear=!this.botonBloquear;
     localStorage.setItem("acepta",JSON.stringify(this.aceptaPoliticas))
     const empleado: Empleado = {
@@ -94,6 +101,11 @@ export default class HomeComponent implements OnInit, AfterViewInit {
       calificacion: this.calificacionEnum,
       rating: this.rating,
     }
+
+    if (this.subObservacion != '') {
+      this.observacion = `Nuestras Instalaciones: ${this.subObservacion}`;
+    }
+
 
     this.calificacionService.saveRating(calificacion).subscribe({
       next:(calificacion : Calificacion) => {
@@ -160,6 +172,9 @@ export default class HomeComponent implements OnInit, AfterViewInit {
     }else {
       this.validarNombre()
     }
+    if (this.emp_nombre == ''){
+      this.logout()
+    }
   }
 
   protected readonly esNombre = esNombre;
@@ -179,4 +194,10 @@ export default class HomeComponent implements OnInit, AfterViewInit {
     }
   }
 
+  onSelectChange() {
+    // Resetear la subcategoría si cambia la opción principal
+    if (this.observacion !== 'Nuestras Instalaciones') {
+      this.subObservacion = '';
+    }
+  }
 }
