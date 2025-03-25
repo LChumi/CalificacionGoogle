@@ -31,7 +31,11 @@ export class CalificacionService {
     return this.http.delete<any>(`${this.baseUrl}/delete/${id}`);
   }
 
-  search(empleadoId?: string, rating?: number, fechaInicio?: string, fechaFin?: string): Observable<Calificacion[]> {
+  search(
+    empleadoId?: string,
+    rating?: number,
+    fechaInicio?: string,
+    fechaFin?: string): Observable<Calificacion[]> {
     let params = new HttpParams();
     if (empleadoId) params = params.set('empleadoId', empleadoId);
     if (rating) params = params.set('rating', rating);

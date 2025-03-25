@@ -1,3 +1,5 @@
+import {formatDate} from "@angular/common";
+
 export function formatearNombre(data: string): string {
   const nombres = data.split(' ');
   const nombre = nombres[0]; // Primer nombre
@@ -25,4 +27,18 @@ export function esNombre(data: string){
 export function formatHora(hora: string): string {
   // Eliminar los milisegundos y devolver solo "HH:mm:ss"
   return hora.split('.')[0];
+}
+
+export function formatearFecha(fecha : any) {
+  // Si la fecha no está vacía y tiene el formato dd/mm/aaaa
+  if (fecha && fecha.match(/^\d{2}\/\d{2}\/\d{4}$/)) {
+    const partes = fecha.split('/');
+    // Formatea la fecha al formato yyyy-MM-dd
+    fecha = `${partes[2]}-${partes[1]}-${partes[0]}`;
+  } else {
+    return;
+  }
+  // Siempre formatea la fecha al formato yyyy-MM-dd después de la verificación
+  fecha = formatDate(fecha, 'yyyy-MM-dd', 'en-US');
+  return fecha
 }

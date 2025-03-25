@@ -8,15 +8,63 @@
         <p class="text-sm text-gray-600 text-center">
           LISTA DE CALIFICACIONES A COLABORADORES
         </p>
-        <button (click)="viewCharts()"
-          class="bg-blue-400 hover:bg-blue-500 text-white py-2 px-4 rounded flex items-center space-x-2">
-          <span class="text-base">Ver Graficos</span>
-          <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15v4m6-6v6m6-4v4m6-6v6M3 11l6-5 6 5 5.5-5.5"/>
-          </svg>
-        </button>
+        <div class="relative w-full h-full p-4  rounded-lg">
+          <!-- Botón en la esquina superior izquierda -->
+          <button (click)="viewCharts()"
+                  class="absolute top-2 left-2 bg-blue-400 hover:bg-blue-500 text-white py-2 px-4 rounded flex items-center space-x-2 shadow-md">
+            <span class="text-base">{{getLabel()}}</span>
+            <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15v4m6-6v6m6-4v4m6-6v6M3 11l6-5 6 5 5.5-5.5"/>
+            </svg>
+          </button>
+
+          <!-- Botón en la esquina superior derecha -->
+          <button (click)="exportExcel()"
+                  class="absolute top-2 right-2 bg-green-600 hover:bg-green-500 text-white py-2 px-4 rounded flex items-center space-x-2 shadow-md">
+            <span class="text-base">Descargar Excel</span>
+            <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 15v2a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3v-2m-8 1V4m0 12-4-4m4 4 4-4" />
+            </svg>
+          </button>
+        </div>
 
         @if (!viewChartsDiv){
+          <div class="px-4 py-4 card card-compact">
+            <div class="card-body grid grid-cols-3 gap-3 lg:grid-cols-4 lg:gap-8" (keydown.enter)="search()">
+              <form>
+                <label for="estado" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Estado:</label>
+                <select id="estado" name="estado" title="Estado" [(ngModel)]="rating"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-1.5 dark:border-gray-600 dark:placeholder:-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                  @for (rating of ratings; track $index){
+                    <option [value]="rating.value">{{ rating.label }} {{rating.value}}</option>
+                  }
+                </select>
+              </form>
+              <form>
+                <label for="empleado" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cliente:</label>
+                <input
+                  type="text"
+                  id="empleado"
+                  name="empleado"
+                  [(ngModel)]="empleadoId"
+                  placeholder="Colaborador"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-1.5 dark:border-gray-600 dark:placeholder:-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500">
+              </form>
+              <form>
+                <label for="fecha" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha</label>
+                <input type="date" id="fecha" name="fechaInicio" [(ngModel)]="fechaInicio"
+                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-1.5 dark:border-gray-600 dark:placeholder:-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                       (change)="formatearFecha(fechaInicio)">
+              </form>
+              <form>
+                <label for="fechaFin" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha Fin </label>
+                <input type="date" id="fechaFin" name="fechaFin" [(ngModel)]="fechaFin"
+                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-1.5 dark:border-gray-600 dark:placeholder:-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                       (change)="formatearFecha(fechaFin)">
+              </form>
+            </div>
+
+          </div>
           <div class="overflow-x-auto py-4">
             <table class="table w-full">
               <thead class="bg-sky-500">
