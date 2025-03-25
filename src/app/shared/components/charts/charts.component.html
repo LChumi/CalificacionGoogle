@@ -1,15 +1,15 @@
-<div class="bg-white p-6 rounded-xl shadow-lg w-full max-w-6xl">
+<div class="bg-white p-6 rounded-xl shadow-lg w-full max-w-7xl lg:max-w-screen-lg">
   <h2 class="text-lg font-semibold text-center mb-4">Resumen de Calificaciones</h2>
 
   <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
     <!-- Gráfico de Líneas -->
     <div class="flex flex-col items-center p-4 bg-gray-50 rounded-lg shadow-md">
-      <canvas #chartCanvas class="w-80 h-80 md:w-96 md:h-96"></canvas>
+      <canvas #chartCanvas class="w-full h-80 md:h-[500px]"></canvas>
     </div>
 
     <!-- Gráfico de Radar -->
     <div class="flex flex-col items-center p-4 bg-gray-50 rounded-lg shadow-md">
-      <canvas #chartCanvasRadar class="w-80 h-80 md:w-96 md:h-96"></canvas>
+      <canvas #chartCanvasRadar class="w-full h-80 md:h-[500px]"></canvas>
     </div>
   </div>
 </div>
