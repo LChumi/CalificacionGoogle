@@ -102,7 +102,7 @@ export default class HomeComponent implements OnInit, AfterViewInit {
       rating: this.rating,
     }
 
-    if (this.subObservacion != '') {
+    if (this.observacion === 'Nuestras Instalaciones') {
       this.observacion = `Nuestras Instalaciones: ${this.subObservacion}`;
     }
 

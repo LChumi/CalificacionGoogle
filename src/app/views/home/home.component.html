@@ -23,14 +23,14 @@
                 <app-ratings-buttons></app-ratings-buttons>
                 </div>
               }@else {
-                <div class="px-6 flex justify-center items-center h-full">
+                <div class="px-6 flex justify-center items-center h-full py-6">
                 <app-ratings-star></app-ratings-star>
                 </div>
               }
 
-            @if (rating <=6){
+            @if (rating <=7){
               <div class="relative w-full mb-3">
-                <label for="Sugerencia" class="block text-blueGray-600 text-xs font-thin text-center mb-2">
+                <label for="Sugerencia" class="block uppercase text-blueGray-600 text-sm font-thin text-center mb-2">
                   ¿Qué nos recomendarías mejorar?
                 </label>
                 <select
@@ -51,7 +51,7 @@
               <!-- Subcategoría (solo se muestra si selecciona "Nuestras Instalaciones") -->
               @if (observacion === 'Nuestras Instalaciones'){
                 <div class="relative w-full mb-3" >
-                  <label for="subcategoria" class="block text-blueGray-600 text-xs font-thin text-center mb-2">
+                  <label for="subcategoria" class="block uppercase text-blueGray-600 text-sm font-thin text-center mb-2">
                     ¿Qué parte de nuestras instalaciones?
                   </label>
                   <select
@@ -69,6 +69,10 @@
                 </div>
               }
             }
+            <div class="relative w-full mb-3">
+              <label for="Sugerencia1" class="block text-blueGray-600 text-xs font-thin text-center mb-2">¿Alguna sugerencia o comentario sobre cómo te atendimos? ¡Nos encantaría saberlo!</label>
+              <input type="text" id="Sugerencia1" [(ngModel)]="observacion" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 " placeholder="Sugerencia" />
+            </div>
 
               <div class="text-center mt-6">
                 @if (aceptaPoliticas) {
