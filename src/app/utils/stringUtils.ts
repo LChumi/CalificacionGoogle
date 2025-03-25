@@ -21,3 +21,8 @@ export function getTipo(cedula:string): string {
 export function esNombre(data: string){
   return isNaN(Number(data));
 }
+
+export function formatHora(hora: string): string {
+  // Eliminar los milisegundos y devolver solo "HH:mm:ss"
+  return hora.split('.')[0];
+}
