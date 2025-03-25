@@ -42,6 +42,7 @@ export default class HomeComponent implements OnInit, AfterViewInit {
   usrId= '';
   emp_nombre = '';
   observacion:string='';
+  sugerencia:string='';
   subObservacion: string=''
   rating: number = 0;
   calificacionEnum:string='';
@@ -83,6 +84,7 @@ export default class HomeComponent implements OnInit, AfterViewInit {
   guardarCalificacion(){
     this.botonBloquear=!this.botonBloquear;
     localStorage.setItem("acepta",JSON.stringify(this.aceptaPoliticas))
+    this.validateObservationInput()
     const empleado: Empleado = {
       id : this.usrId,
       nombre : this.emp_nombre
@@ -101,11 +103,6 @@ export default class HomeComponent implements OnInit, AfterViewInit {
       calificacion: this.calificacionEnum,
       rating: this.rating,
     }
-
-    if (this.observacion === 'Nuestras Instalaciones') {
-      this.observacion = `Nuestras Instalaciones: ${this.subObservacion}`;
-    }
-
 
     this.calificacionService.saveRating(calificacion).subscribe({
       next:(calificacion : Calificacion) => {
@@ -198,6 +195,22 @@ export default class HomeComponent implements OnInit, AfterViewInit {
     // Resetear la subcategoría si cambia la opción principal
     if (this.observacion !== 'Nuestras Instalaciones') {
       this.subObservacion = '';
+    }
+  }
+
+  validateObservationInput(){
+    if (this.observacion?.trim() && this.sugerencia?.trim()) {
+      this.observacion = `${this.observacion} : ${this.sugerencia}`;
+    }
+
+    if (this.observacion === 'Nuestras Instalaciones') {
+      if (this.subObservacion.trim() !=='' && this.sugerencia?.trim() !==''){
+        this.subObservacion = `${this.subObservacion} : ${this.sugerencia}`;
+        this.observacion = `Nuestras Instalaciones: ${this.subObservacion}`;
+      }
+      if (this.sugerencia?.trim() !=='') {
+        this.observacion = `Nuestras Instalaciones: ${this.sugerencia}`;
+      }
     }
   }
 }
