@@ -1,6 +1,5 @@
-
 <div class="flex justify-center items-center h-screen bg-gray-100">
-   <div class="container mx-auto px-4">
+  <div class="container mx-auto px-4">
     <div class="flex content-center items-center justify-center">
       <div class="w-full lg:w-6/12 px-4">
         <div class="relative flex flex-col shadow-lg rounded-lg bg-blueGray-200 border-0">
@@ -18,75 +17,77 @@
             />
           </div>
           <div>
-              @if (visibleRatingButtons){
-                <div class="bg-slate-100 px-6 shadow">
+            @if (visibleRatingButtons) {
+              <div class="bg-slate-100 px-6 shadow">
                 <app-ratings-buttons></app-ratings-buttons>
-                </div>
-              }@else {
-                <div class="px-6 flex justify-center items-center h-full py-6">
+              </div>
+            } @else {
+              <div class="px-6 flex justify-center items-center h-full py-6">
                 <app-ratings-star></app-ratings-star>
-                </div>
-              }
+              </div>
+            }
 
-            @if (rating <=7){
+            <div class="relative w-full mb-3">
+              <label for="Sugerencia" class="block uppercase text-blueGray-600 text-sm font-thin text-center mb-2">
+                ¿Qué nos recomendarías mejorar?
+              </label>
+              <select
+                id="Sugerencia"
+                [(ngModel)]="observacion"
+                (change)="onSelectChange()"
+                class="border-0 px-3 py-3 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+              >
+                <option value="" disabled selected>Seleccione una opción</option>
+                @for (opcion of opciones; track $index) {
+                  <option [value]="opcion">
+                    {{ opcion }}
+                  </option>
+                }
+              </select>
+            </div>
+
+            <!-- Subcategoría (solo se muestra si selecciona "Nuestras Instalaciones") -->
+            @if (observacion === 'Nuestras Instalaciones') {
               <div class="relative w-full mb-3">
-                <label for="Sugerencia" class="block uppercase text-blueGray-600 text-sm font-thin text-center mb-2">
-                  ¿Qué nos recomendarías mejorar?
+                <label for="subcategoria" class="block uppercase text-blueGray-600 text-sm font-thin text-center mb-2">
+                  ¿Qué parte de nuestras instalaciones?
                 </label>
                 <select
-                  id="Sugerencia"
-                  [(ngModel)]="observacion"
-                  (change)="onSelectChange()"
+                  id="subcategoria"
+                  [(ngModel)]="subObservacion"
                   class="border-0 px-3 py-3 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                 >
                   <option value="" disabled selected>Seleccione una opción</option>
-                  @for (opcion of opciones; track $index){
-                    <option [value]="opcion">
-                      {{ opcion }}
+                  @for (sub of subOpciones; track $index) {
+                    <option [value]="sub">
+                      {{ sub }}
                     </option>
                   }
                 </select>
               </div>
-
-              <!-- Subcategoría (solo se muestra si selecciona "Nuestras Instalaciones") -->
-              @if (observacion === 'Nuestras Instalaciones'){
-                <div class="relative w-full mb-3" >
-                  <label for="subcategoria" class="block uppercase text-blueGray-600 text-sm font-thin text-center mb-2">
-                    ¿Qué parte de nuestras instalaciones?
-                  </label>
-                  <select
-                    id="subcategoria"
-                    [(ngModel)]="subObservacion"
-                    class="border-0 px-3 py-3 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                  >
-                    <option value="" disabled selected>Seleccione una opción</option>
-                    @for ( sub of subOpciones ; track $index) {
-                      <option [value]="sub">
-                        {{ sub }}
-                      </option>
-                    }
-                  </select>
-                </div>
-              }
             }
+
             <div class="relative w-full mb-3">
-              <label for="Sugerencia1" class="block text-blueGray-600 text-xs font-thin text-center mb-2">¿Alguna sugerencia o comentario sobre cómo nosotros? ¡Nos encantaría saberlo!</label>
-              <input type="text" id="Sugerencia1" autocomplete="off" [(ngModel)]="sugerencia" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 " placeholder="Sugerencia" />
+              <label for="Sugerencia1" class="block text-blueGray-600 text-xs font-thin text-center mb-2">¿Alguna
+                sugerencia o comentario sobre cómo nosotros? ¡Nos encantaría saberlo!</label>
+              <input type="text" id="Sugerencia1" autocomplete="off" [(ngModel)]="sugerencia"
+                     class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 "
+                     placeholder="Sugerencia"/>
             </div>
 
-              <div class="text-center mt-6">
-                @if (aceptaPoliticas) {
-                  @if (!botonBloquear){
-                    <button
-                      type="button"
-                      class="bg-blue-500 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded-3xl shadow hover:shadow-lg outline-none focus:outline-none w-full ease-linear transition-all duration-150"
-                      (click)="guardarCalificacion()"
-                      [disabled]="botonBloquear">Enviar calificacion
-                    </button>
-                  }
+            <div class="text-center mt-6">
+              @if (aceptaPoliticas) {
+                @if (!botonBloquear) {
+                  <button
+                    type="button"
+                    class="bg-blue-500 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded-3xl shadow hover:shadow-lg outline-none focus:outline-none w-full ease-linear transition-all duration-150"
+                    (click)="guardarCalificacion()"
+                    [disabled]="botonBloquear">Enviar calificacion
+                  </button>
                 }
+              }
 
-              </div>
+            </div>
             <div class="text-center mt-3">
               <input
                 type="checkbox"
