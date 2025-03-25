@@ -198,19 +198,18 @@ export default class HomeComponent implements OnInit, AfterViewInit {
     }
   }
 
-  validateObservationInput(){
-    if (this.observacion?.trim() && this.sugerencia?.trim()) {
-      this.observacion = `${this.observacion} : ${this.sugerencia}`;
-    }
-
+  validateObservationInput() {
     if (this.observacion === 'Nuestras Instalaciones') {
-      if (this.subObservacion.trim() !=='' && this.sugerencia?.trim() !==''){
-        this.subObservacion = `${this.subObservacion} : ${this.sugerencia}`;
-        this.observacion = `Nuestras Instalaciones: ${this.subObservacion}`;
+      if (this.subObservacion?.trim()) {
+        this.observacion = `Nuestras Instalaciones : ${this.subObservacion}`;
+        if (this.sugerencia?.trim()) {
+          this.observacion += ` : ${this.sugerencia}`;
+        }
+      } else if (this.sugerencia?.trim()) {
+        this.observacion = `Nuestras Instalaciones : ${this.sugerencia}`;
       }
-      if (this.sugerencia?.trim() !=='') {
-        this.observacion = `Nuestras Instalaciones: ${this.sugerencia}`;
-      }
+    } else if (this.observacion?.trim() && this.sugerencia?.trim()) {
+      this.observacion = `${this.observacion} : ${this.sugerencia}`;
     }
   }
 }
