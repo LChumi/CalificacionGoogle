@@ -1,15 +1,39 @@
-<div class="bg-white p-6 rounded-xl shadow-lg w-full max-w-7xl lg:max-w-screen-lg">
-  <h2 class="text-lg font-semibold text-center mb-4">Resumen de Calificaciones</h2>
+<div class="bg-white p-6 rounded-xl">
+  <h2 class="text-lg font-semibold text-center mb-4">Resumen de Calificaciones {{getFechaString()}}</h2>
 
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
     <!-- Gráfico de Líneas -->
-    <div class="flex flex-col items-center p-4 bg-gray-50 rounded-lg shadow-md">
-      <canvas #chartCanvas class="w-full h-80 md:h-[500px]"></canvas>
+    <div class="flex flex-col items-center p-4 bg-gray-50 rounded-lg shadow-md w-full">
+      <canvas #chartCanvas class="w-full h-[300px] md:h-[400px]"></canvas>
     </div>
 
     <!-- Gráfico de Radar -->
-    <div class="flex flex-col items-center p-4 bg-gray-50 rounded-lg shadow-md">
-      <canvas #chartCanvasRadar class="w-full h-80 md:h-[500px]"></canvas>
+    <div class="flex flex-col items-center p-4 bg-gray-50 rounded-lg shadow-md w-full">
+      <canvas #chartCanvasRadar class="w-full h-[300px] md:h-[400px]"></canvas>
     </div>
+  </div>
+
+  @if (votos > 15) {
+    <span class="text-center block mt-4 text-lg font-medium">
+      🎉 Felicitamos a <strong>{{ empleadoVotos | titlecase }}</strong>, el colaborador con la mayor participación de los clientes, alcanzando <strong>{{ votos }}</strong> votos.
+    </span>
+  }
+
+  <div class="flex flex-col items-center p-4 bg-gray-50 rounded-lg shadow-md w-full">
+    <span class="text-lg font-semibold">NPS</span>
+    <p
+      class="text-xl font-bold text-center mt-2 px-4 py-2 rounded-lg"
+      [ngClass]="{
+    'bg-red-500 text-white': Number(npsValue) < 63,
+    'bg-yellow-500 text-white': Number(npsValue) >= 63 && Number(npsValue) <= 70,
+    'bg-green-500 text-white': Number(npsValue) > 70
+  }"
+    >
+      NPS = {{ npsValue }}%
+    </p>
+
+
+    <canvas #chartCanvasNps class="w-full h-[300px] md:h-[400px]"></canvas>
+    <span class="mt-2 text-gray-600">Total: {{ totalVotos }} calificaciones</span>
   </div>
 </div>

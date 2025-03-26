@@ -2,12 +2,6 @@
   <div class="container mx-auto">
     <div class="card bg-white shadow-md">
       <div class="card-body">
-        <h5 class="card-title text-center text-lg font-semibold">
-          CALIFICACIONES
-        </h5>
-        <p class="text-sm text-gray-600 text-center">
-          LISTA DE CALIFICACIONES A COLABORADORES
-        </p>
         <div class="relative w-full h-full p-4  rounded-lg">
           <!-- Botón en la esquina superior izquierda -->
           <button (click)="viewCharts()"
@@ -33,6 +27,12 @@
         </div>
 
         @if (!viewChartsDiv) {
+          <h5 class="card-title text-center text-lg font-semibold">
+            CALIFICACIONES
+          </h5>
+          <p class="text-sm text-gray-600 text-center">
+            LISTA DE CALIFICACIONES A COLABORADORES
+          </p>
           <div class="px-4 py-4 card card-compact">
             <div class="card-body grid grid-cols-3 gap-3 lg:grid-cols-4 lg:gap-8" (keydown.enter)="search()">
               <form>
@@ -71,6 +71,7 @@
             </div>
 
           </div>
+          <small>Total: {{calificaciones.length}} calificaciones</small>
           <div class="overflow-x-auto py-4">
             <table class="table-auto w-full border border-gray-300 shadow-lg rounded-lg">
               <thead class="bg-gray-700 text-white">
@@ -112,7 +113,7 @@
             </table>
           </div>
         } @else {
-          <div class="flex justify-center items-center max-h-screen bg-gray-100 w-full lg:w-11/12 xl:w-10/12 mx-auto">
+          <div class="flex flex-col p-6 rounded-xl shadow-lg w-full max-w-full lg:max-w-6xl overflow-hidden">
             <app-charts></app-charts>
           </div>
         }

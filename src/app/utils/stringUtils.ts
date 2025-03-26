@@ -42,3 +42,9 @@ export function formatearFecha(fecha : any) {
   fecha = formatDate(fecha, 'yyyy-MM-dd', 'en-US');
   return fecha
 }
+
+export function getFechaString() {
+  const fechaActual = new Date();
+  const formatoFecha = fechaActual.toLocaleDateString('es-ES', { month: 'long', year: 'numeric' });
+  return formatoFecha.charAt(0).toUpperCase() + formatoFecha.slice(1)
+}
