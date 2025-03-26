@@ -1,109 +1,113 @@
-<div class="flex justify-center items-center h-screen bg-gray-100">
-  <div class="container mx-auto px-4">
-    <div class="flex content-center items-center justify-center">
-      <div class="w-full lg:w-6/12 px-4">
-        <div class="relative flex flex-col shadow-lg rounded-lg bg-blueGray-200 border-0">
-          <div class="text-center mt-8">
-            <p class="text-3xl font-bold text-blueGray-800 mb-2 uppercase">Bienvenido</p>
-            @if (esNombre(cli_nombre)) {
-              <p class="text-2xl font-semibold">{{ cli_nombre }}</p>
-            }
-            <p class="uppercase">Califica la calidad de atencion recibida por parte de:</p>
-            <p>{{ emp_nombre }}</p>
-            <img
-              class="w-28 h-28 rounded-full mx-auto mb-4"
-              alt="foto-perfil"
-              [src]="imageDir"
-            />
-          </div>
-          <div>
-            @if (visibleRatingButtons) {
-              <div class="bg-slate-100 px-6 shadow">
-                <app-ratings-buttons></app-ratings-buttons>
-              </div>
-            } @else {
-              <div class="px-6 flex justify-center items-center h-full py-6">
-                <app-ratings-star></app-ratings-star>
-              </div>
-            }
+<div class="flex flex-col justify-center items-center min-h-screen ">
+    <div class="w-full max-w-2xl bg-white shadow-lg rounded-lg p-6 border overflow-auto max-h-screen">
 
-            <div class="relative w-full mb-3">
-              <label for="Sugerencia" class="block uppercase text-blueGray-600 text-sm font-thin text-center mb-2">
-                ¿Qué nos recomendarías mejorar?
-              </label>
-              <select
-                id="Sugerencia"
-                [(ngModel)]="observacion"
-                (change)="onSelectChange()"
-                class="border-0 px-3 py-3 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-              >
-                <option value="" disabled selected>Seleccione una opción</option>
-                @for (opcion of opciones; track $index) {
-                  <option [value]="opcion">
-                    {{ opcion }}
-                  </option>
-                }
-              </select>
-            </div>
+      <!-- Título -->
+      <div class="text-center">
+        <p class="text-3xl font-bold text-gray-800">Bienvenido</p>
+        @if (esNombre(cli_nombre)) {
+          <p class="text-xl font-semibold text-gray-700 capitalize">{{ cli_nombre | titlecase }}</p>
+        }
+        <p class="text-lg text-gray-600 mt-2">Usted fue atendido por:</p>
+        <p class="text-lg font-medium text-gray-700">{{ emp_nombre | titlecase }}</p>
 
-            <!-- Subcategoría (solo se muestra si selecciona "Nuestras Instalaciones") -->
-            @if (observacion === 'Nuestras Instalaciones') {
-              <div class="relative w-full mb-3">
-                <label for="subcategoria" class="block uppercase text-blueGray-600 text-sm font-thin text-center mb-2">
-                  ¿Qué parte de nuestras instalaciones?
-                </label>
-                <select
-                  id="subcategoria"
-                  [(ngModel)]="subObservacion"
-                  class="border-0 px-3 py-3 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                >
-                  <option value="" disabled selected>Seleccione una opción</option>
-                  @for (sub of subOpciones; track $index) {
-                    <option [value]="sub">
-                      {{ sub }}
-                    </option>
-                  }
-                </select>
-              </div>
-            }
-
-            <div class="relative w-full mb-3">
-              <label for="Sugerencia1" class="block text-blueGray-600 text-xs font-thin text-center mb-2">¿Alguna
-                sugerencia o comentario sobre cómo nosotros? ¡Nos encantaría saberlo!</label>
-              <input type="text" id="Sugerencia1" autocomplete="off" [(ngModel)]="sugerencia"
-                     class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 "
-                     placeholder="Sugerencia"/>
-            </div>
-
-            <div class="text-center mt-6">
-              @if (aceptaPoliticas) {
-                @if (!botonBloquear) {
-                  <button
-                    type="button"
-                    class="bg-blue-500 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded-3xl shadow hover:shadow-lg outline-none focus:outline-none w-full ease-linear transition-all duration-150"
-                    (click)="guardarCalificacion()"
-                    [disabled]="botonBloquear">Enviar calificacion
-                  </button>
-                }
-              }
-
-            </div>
-            <div class="text-center mt-3">
-              <input
-                type="checkbox"
-                id="acepta"
-                [(ngModel)]="aceptaPoliticas"
-              />
-              <label for="acepta">Al enviar su reseña, usted acepta nuestras políticas de Ley de Protección de Datos.
-                <a (click)="mostrarVentana()" class="ml-2 text-blue-600 underline">Ver políticas</a>
-              </label>
-            </div>
-          </div>
-        </div>
+        <img class="w-24 h-24 rounded-full mx-auto mt-4 shadow" alt="foto-perfil" [src]="imageDir" />
       </div>
+
+      <!-- Botones de calificación -->
+      <div class="mt-4">
+        @if (visibleRatingButtons) {
+          <div class="bg-gray-100 px-4 py-3 rounded-lg shadow">
+            <app-ratings-buttons></app-ratings-buttons>
+          </div>
+        } @else {
+          <label for="rating" class="block text-lg font-semibold text-gray-700 text-center mb-2">
+            ¿Qué tan probable es que nos recomiende?
+          </label>
+          <div class="flex justify-center py-2">
+            <app-ratings-star id="rating"></app-ratings-star>
+          </div>
+        }
+      </div>
+
+      <!-- Selección de sugerencia -->
+      <div class="mt-4">
+        <label for="Sugerencia" class="block text-lg font-medium text-gray-700 text-center mb-2">
+          ¿Qué nos recomendarías mejorar?
+        </label>
+        <select
+          id="Sugerencia"
+          [(ngModel)]="observacion"
+          (change)="onSelectChange()"
+          class="border border-gray-300 px-4 py-2 bg-white rounded-lg text-base shadow focus:outline-none focus:ring w-full transition"
+        >
+          <option value="" disabled selected>Seleccione una opción</option>
+          @for (opcion of opciones; track $index) {
+            <option [value]="opcion">{{ opcion }}</option>
+          }
+        </select>
+      </div>
+
+      <!-- Subcategoría (solo si selecciona "Nuestras Instalaciones") -->
+      @if (observacion === 'Nuestras Instalaciones') {
+        <div class="mt-3">
+          <label for="subcategoria" class="block text-lg font-medium text-gray-700 text-center mb-2">
+            ¿Qué parte de nuestras instalaciones?
+          </label>
+          <select
+            id="subcategoria"
+            [(ngModel)]="subObservacion"
+            class="border border-gray-300 px-4 py-2 bg-white rounded-lg text-base shadow focus:outline-none focus:ring w-full transition"
+          >
+            <option value="" disabled selected>Seleccione una opción</option>
+            @for (sub of subOpciones; track $index) {
+              <option [value]="sub">{{ sub }}</option>
+            }
+          </select>
+        </div>
+      }
+
+      <!-- Input de sugerencias -->
+      <div class="mt-3">
+        <label for="Sugerencia1" class="block text-lg font-medium text-gray-700 text-center mb-2">
+          ¿Alguna sugerencia o comentario?
+        </label>
+        <input
+          type="text"
+          id="Sugerencia1"
+          autocomplete="off"
+          [(ngModel)]="sugerencia"
+          class="border border-gray-300 px-4 py-2 bg-white rounded-lg text-base shadow focus:outline-none focus:ring w-full transition"
+          placeholder="Escriba su sugerencia aquí..."
+        />
+      </div>
+
+      <!-- Botón de envío -->
+      <div class="text-center mt-4">
+        @if (aceptaPoliticas) {
+          @if (!botonBloquear) {
+            <button
+              type="button"
+              class="bg-blue-500 text-white text-lg font-semibold uppercase px-6 py-3 rounded-xl shadow hover:bg-blue-600 focus:outline-none w-full transition"
+              (click)="guardarCalificacion()"
+              [disabled]="botonBloquear"
+            >
+              Enviar calificación
+            </button>
+          }
+        }
+      </div>
+
+      <!-- Checkbox de políticas -->
+      <div class="text-center mt-3">
+        <input type="checkbox" id="acepta" [(ngModel)]="aceptaPoliticas" class="mr-2" />
+        <label for="acepta" class="text-gray-600 text-sm">
+          Al enviar su reseña, acepta nuestras políticas de protección de datos.
+          <a (click)="mostrarVentana()" class="ml-2 text-blue-600 underline cursor-pointer">Ver políticas</a>
+        </label>
+      </div>
+
     </div>
   </div>
-</div>
 
 <!-- Main modal -->
 <div

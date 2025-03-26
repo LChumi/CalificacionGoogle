@@ -1,4 +1,12 @@
 <div class="relative w-full h-screen">
-  <div class="absolute inset-0 bg-cover bg-center z-0" style="background-image: url('assets/images/fondo_login.png')"></div>
-  <router-outlet />
+  <!-- Contenido principal -->
+  <main
+    class="relative z-10 w-full h-full overflow-auto"
+    style="background-image: url('assets/images/fondo_login.png'); background-size: cover; background-position: center;"
+  >
+    <router-outlet></router-outlet>
+  </main>
+  <footer>
+    <app-footer></app-footer>
+  </footer>
 </div>
