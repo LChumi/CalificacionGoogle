@@ -167,7 +167,7 @@ export default class HomeComponent implements OnInit, AfterViewInit {
       if (alm === ''){
         this.logout()
       }else{
-        this.emp_nombre = alm;
+        this.emp_nombre = alm.toUpperCase();
         this.usrId = 'IMPC'
         this.isAlm = true;
       }

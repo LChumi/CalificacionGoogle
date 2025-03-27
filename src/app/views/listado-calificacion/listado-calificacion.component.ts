@@ -76,7 +76,7 @@ export default class ListadoCalificacionComponent implements OnInit {
       alert('campos vacios')
       return;
     }
-   this.calificacionService.search(empleadoId,rating,fechaInicio,fechaFin).subscribe({
+   this.calificacionService.search(empleadoId.toUpperCase(),rating,fechaInicio,fechaFin).subscribe({
       next: data => {
         this.calificaciones = data
         this.cleanInputs()
