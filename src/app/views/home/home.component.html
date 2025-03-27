@@ -7,8 +7,11 @@
         @if (esNombre(cli_nombre)) {
           <p class="text-xl font-semibold text-gray-700 capitalize">{{ cli_nombre | titlecase }}</p>
         }
-        <p class="text-lg text-gray-600 mt-2">Usted fue atendido por:</p>
-        <p class="text-lg font-medium text-gray-700">{{ emp_nombre | titlecase }}</p>
+        @if (!isAlm){
+          <p class="text-lg text-gray-600 mt-2">Usted fue atendido por:</p>
+          <p class="text-lg font-medium text-gray-700">{{ emp_nombre | titlecase }}</p>
+        }
+
 
         <img class="w-24 h-24 rounded-full mx-auto mt-4 shadow" alt="foto-perfil" [src]="imageDir" />
       </div>

@@ -16,15 +16,7 @@ import {RatingsStarComponent} from "../../shared/components/ratings-star/ratings
   standalone: true,
   imports: [CommonModule, FormsModule, RouterModule, RatingsButtonsComponent, RatingsStarComponent],
   templateUrl: './home.component.html',
-  styles: `
-    .bg-text-color-white:focus {
-      color: white;
-    }
-
-    .bg-text-color-white:active {
-      color: white;
-    }
-  `,
+  styles: ``,
 })
 export default class HomeComponent implements OnInit, AfterViewInit {
 
@@ -49,6 +41,7 @@ export default class HomeComponent implements OnInit, AfterViewInit {
   ventanaPolitica: boolean= false;
   aceptaPoliticas: boolean = false;
   visibleRatingButtons:boolean = false;
+  isAlm:boolean=false;
 
   botonBloquear:boolean = false;
 
@@ -73,7 +66,7 @@ export default class HomeComponent implements OnInit, AfterViewInit {
   }
 
   goToIndex(){
-    this.route.navigate(['/cumple/inicio'])
+    this.route.navigate(['/cumple/inicio']).then(r => {})
   }
 
 
@@ -107,7 +100,7 @@ export default class HomeComponent implements OnInit, AfterViewInit {
     this.calificacionService.saveRating(calificacion).subscribe({
       next:(calificacion : Calificacion) => {
         if(calificacion){
-          this.goToIndex()
+          this.navigate()
         }
       },error:(error) => {
         console.error(error)
@@ -170,7 +163,14 @@ export default class HomeComponent implements OnInit, AfterViewInit {
       this.validarNombre()
     }
     if (this.emp_nombre == ''){
-      this.logout()
+      const alm = localStorage.getItem('alm_nombre') ?? '';
+      if (alm === ''){
+        this.logout()
+      }else{
+        this.emp_nombre = alm;
+        this.usrId = 'IMPC'
+        this.isAlm = true;
+      }
     }
   }
 
@@ -211,5 +211,18 @@ export default class HomeComponent implements OnInit, AfterViewInit {
     } else if (this.observacion?.trim() && this.sugerencia?.trim()) {
       this.observacion = `${this.observacion} : ${this.sugerencia}`;
     }
+  }
+
+  navigate(){
+    if (this.emp_nombre && this.emp_nombre.startsWith("alm")){
+      localStorage.removeItem('cli_id')
+      localStorage.removeItem('cli_nombre')
+      this.route.navigate([`/auth/${this.emp_nombre}`]).then(r => {
+        console.log('Navegación exitosa', r);
+      });
+    }else{
+      this.goToIndex()
+    }
+
   }
 }

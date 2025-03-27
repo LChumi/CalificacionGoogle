@@ -55,15 +55,19 @@ export default class LoginComponent implements OnInit {
   }
 
   obtenerEmpleado(id: any) {
-    this.empleadoService.getUsuario(id).subscribe({
-      next: (usuario: Usuario) => {
-        if (usuario) {
-          sessionStorage.setItem('emp_id', String(usuario.usr_id));
-          const nombre = formatearNombre(usuario.usr_nombre)
-          sessionStorage.setItem('emp_nombre', nombre);
-        }
-      },
-    });
+    if (id === 'alm-narancay' || id === 'alm-gcolombia' || id === 'alm-vergel') {
+      localStorage.setItem('alm_nombre', id);
+    } else {
+      this.empleadoService.getUsuario(id).subscribe({
+        next: (usuario: Usuario) => {
+          if (usuario) {
+            sessionStorage.setItem('emp_id', String(usuario.usr_id));
+            const nombre = formatearNombre(usuario.usr_nombre)
+            sessionStorage.setItem('emp_nombre', nombre);
+          }
+        },
+      });
+    }
   }
 
   obtenerCliente(id: any) {
