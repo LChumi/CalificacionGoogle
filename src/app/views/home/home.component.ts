@@ -80,7 +80,7 @@ export default class HomeComponent implements OnInit, AfterViewInit {
     this.validateObservationInput()
     const empleado: Empleado = {
       id : this.usrId,
-      nombre : this.emp_nombre
+      nombre : this.emp_nombre.toUpperCase()
     }
     const cliente: Cliente ={
       id : this.cli_cedula,
@@ -167,7 +167,7 @@ export default class HomeComponent implements OnInit, AfterViewInit {
       if (alm === ''){
         this.logout()
       }else{
-        this.emp_nombre = alm.toUpperCase();
+        this.emp_nombre = alm;
         this.usrId = 'IMPC'
         this.isAlm = true;
       }
