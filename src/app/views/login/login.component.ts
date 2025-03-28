@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { EmpleadoService } from '../../core/services/empleado.service';
-import { Usuario } from '../../core/interfaces/usuario';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {EmpleadoService} from '../../core/services/empleado.service';
+import {Usuario} from '../../core/interfaces/usuario';
+import {CommonModule} from '@angular/common';
+import {FormsModule} from '@angular/forms';
 import {SriService} from "../../core/services/sri.service";
 import {formatearNombre} from "../../utils/stringUtils";
 
@@ -21,16 +21,18 @@ export default class LoginComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private empleadoService: EmpleadoService,
-    private sriservice:SriService
+    private sriservice: SriService
   ) {
   }
+
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
       this.idEmpleado = params.get('id');
       this.obtenerEmpleado(this.idEmpleado);
     });
-    if(localStorage.getItem('cli_nombre')){
-      this.router.navigate(['cumple/home']).then(r => {});
+    if (localStorage.getItem('cli_nombre')) {
+      this.router.navigate(['cumple/home']).then(r => {
+      });
     }
   }
 
@@ -38,19 +40,19 @@ export default class LoginComponent implements OnInit {
     if (!this.cedula) {
       alert('Ingrese su número de cédula');
       return;
-  }
+    }
 
-  // Verificar longitud
-  if (this.cedula.length !== 10 && this.cedula.length !== 13) {
+    // Verificar longitud
+    if (this.cedula.length !== 10 && this.cedula.length !== 13) {
       alert('Ingrese su número de cédula');
       return;
-  }
+    }
 
-  // Verificar que todos los caracteres sean dígitos
-  if (!/^\d+$/.test(this.cedula)) {
+    // Verificar que todos los caracteres sean dígitos
+    if (!/^\d+$/.test(this.cedula)) {
       alert('El número de cédula solo puede contener dígitos');
       return;
-  }
+    }
     this.obtenerCliente(this.cedula);
   }
 
@@ -75,12 +77,14 @@ export default class LoginComponent implements OnInit {
       next: (nombreCompleto) => {
         localStorage.setItem('cli_nombre', nombreCompleto || String(id));
         localStorage.setItem('cli_id', id);
-        this.router.navigate(['cumple/home']).then(r => {});
+        this.router.navigate(['cumple/home']).then(r => {
+        });
       },
       error: (error) => {
         localStorage.setItem('cliente', String(id));
         console.error('Error al obtener el cliente:', error);
-        this.router.navigate(['cumple/home']).then(r => {});
+        this.router.navigate(['cumple/home']).then(r => {
+        });
       },
     });
   }

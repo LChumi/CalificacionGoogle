@@ -28,22 +28,22 @@ export default class HomeComponent implements OnInit, AfterViewInit {
   empleadoService = inject(EmpleadoService)
   route = inject(Router)
 
-  cli_nombre= '';
-  cli_cedula='';
-  imageDir:string ='assets/images/user.png';
-  usrId= '';
+  cli_nombre = '';
+  cli_cedula = '';
+  imageDir: string = 'assets/images/user.png';
+  usrId = '';
   emp_nombre = '';
-  observacion:string='';
-  sugerencia:string='';
-  subObservacion: string=''
+  observacion: string = '';
+  sugerencia: string = '';
+  subObservacion: string = ''
   rating: number = 0;
-  calificacionEnum:string='';
-  ventanaPolitica: boolean= false;
+  calificacionEnum: string = '';
+  ventanaPolitica: boolean = false;
   aceptaPoliticas: boolean = false;
-  visibleRatingButtons:boolean = false;
-  isAlm:boolean=false;
+  visibleRatingButtons: boolean = false;
+  isAlm: boolean = false;
 
-  botonBloquear:boolean = false;
+  botonBloquear: boolean = false;
 
   opciones: string[] = [
     'Atención de nuestro personal',
@@ -55,18 +55,19 @@ export default class HomeComponent implements OnInit, AfterViewInit {
 
   subOpciones: string[] = ['Pasillos', 'Señalización', 'Baños', 'Estacionamiento'];
 
-
-  constructor() {}
+  constructor() {
+  }
 
   ngOnInit(): void {
     this.getData()
     setTimeout(() => {
       this.traerImagen()
-    },1000)
+    }, 1000)
   }
 
-  goToIndex(){
-    this.route.navigate(['/cumple/inicio']).then(r => {})
+  goToIndex() {
+    this.route.navigate(['/cumple/inicio']).then(r => {
+    })
   }
 
 
@@ -74,26 +75,26 @@ export default class HomeComponent implements OnInit, AfterViewInit {
     this.goToIndex()
   }
 
-  guardarCalificacion(){
-    this.botonBloquear=!this.botonBloquear;
-    localStorage.setItem("acepta",JSON.stringify(this.aceptaPoliticas))
+  guardarCalificacion() {
+    this.botonBloquear = !this.botonBloquear;
+    localStorage.setItem("acepta", JSON.stringify(this.aceptaPoliticas))
     this.validateObservationInput()
     let id;
-    if (this.emp_nombre.startsWith("alm")){
+    if (this.emp_nombre.startsWith("alm")) {
       id = this.emp_nombre.toUpperCase()
     } else {
       id = this.usrId;
     }
     const empleado: Empleado = {
-      id : id,
-      nombre : this.emp_nombre.toUpperCase()
+      id: id,
+      nombre: this.emp_nombre.toUpperCase()
     }
-    const cliente: Cliente ={
-      id : this.cli_cedula,
+    const cliente: Cliente = {
+      id: this.cli_cedula,
       nombre: this.cli_nombre,
       aceptaPolicies: this.aceptaPoliticas
     }
-    const calificacion : Calificacion = {
+    const calificacion: Calificacion = {
       fecha: null,
       hora: null,
       cliente: cliente,
@@ -104,30 +105,30 @@ export default class HomeComponent implements OnInit, AfterViewInit {
     }
 
     this.calificacionService.saveRating(calificacion).subscribe({
-      next:(calificacion : Calificacion) => {
-        if(calificacion){
-          this.navigate()
+        next: (calificacion: Calificacion) => {
+          if (calificacion) {
+            this.navigate()
+          }
+        }, error: (error) => {
+          console.error(error)
+          this.botonBloquear = false;
         }
-      },error:(error) => {
-        console.error(error)
-          this.botonBloquear=false;
-        }
-    }
+      }
     )
   }
 
-  mostrarVentana(){
-    this.ventanaPolitica = ! this.ventanaPolitica;
+  mostrarVentana() {
+    this.ventanaPolitica = !this.ventanaPolitica;
   }
 
-  traerImagen(){
-    if(/SQUIÑONEZ/.test(this.usrId)){
-      this.usrId='SQUINONEZ';
+  traerImagen() {
+    if (/SQUIÑONEZ/.test(this.usrId)) {
+      this.usrId = 'SQUINONEZ';
     }
-    this.empleadoService.getImagen(this.usrId+'.jpg').subscribe({
+    this.empleadoService.getImagen(this.usrId + '.jpg').subscribe({
       next: data => {
-        if(data){
-          this.imageDir=URL.createObjectURL(data);
+        if (data) {
+          this.imageDir = URL.createObjectURL(data);
         }
       },
       error: error => {
@@ -135,7 +136,6 @@ export default class HomeComponent implements OnInit, AfterViewInit {
       }
     })
   }
-
 
   validarNombre() {
     const isOnlyNumber = /^\d+$/.test(this.cli_nombre);
@@ -154,25 +154,25 @@ export default class HomeComponent implements OnInit, AfterViewInit {
     }
   }
 
-  getData(){
-    this.cli_cedula= localStorage.getItem('cli_id') ?? '';
-    this.cli_nombre= localStorage.getItem('cli_nombre') ?? '';
+  getData() {
+    this.cli_cedula = localStorage.getItem('cli_id') ?? '';
+    this.cli_nombre = localStorage.getItem('cli_nombre') ?? '';
     this.emp_nombre = sessionStorage.getItem('emp_nombre') ?? '';
-    this.usrId= sessionStorage.getItem('emp_id') ?? '';
+    this.usrId = sessionStorage.getItem('emp_id') ?? '';
     const acceptPolicies = localStorage.getItem('acepta');
-    if(acceptPolicies !==null){
-      this.aceptaPoliticas= true;
+    if (acceptPolicies !== null) {
+      this.aceptaPoliticas = true;
     }
-    if(this.cli_nombre == '' && this.cli_cedula == ''){
+    if (this.cli_nombre == '' && this.cli_cedula == '') {
       this.logout()
-    }else {
+    } else {
       this.validarNombre()
     }
-    if (this.emp_nombre == ''){
+    if (this.emp_nombre == '') {
       const alm = localStorage.getItem('alm_nombre') ?? '';
-      if (alm === ''){
+      if (alm === '') {
         this.logout()
-      }else{
+      } else {
         this.emp_nombre = alm;
         this.usrId = 'IMPC'
         this.isAlm = true;
@@ -183,7 +183,7 @@ export default class HomeComponent implements OnInit, AfterViewInit {
   protected readonly esNombre = esNombre;
 
   ngAfterViewInit(): void {
-    if (this.ratings){
+    if (this.ratings) {
       this.ratings.onChangeRating.subscribe(cal => {
         this.calificacionEnum = cal;
       })
@@ -219,14 +219,14 @@ export default class HomeComponent implements OnInit, AfterViewInit {
     }
   }
 
-  navigate(){
-    if (this.emp_nombre && this.emp_nombre.startsWith("alm")){
+  navigate() {
+    if (this.emp_nombre && this.emp_nombre.startsWith("alm")) {
       localStorage.removeItem('cli_id')
       localStorage.removeItem('cli_nombre')
       this.route.navigate([`/auth/${this.emp_nombre}`]).then(r => {
         console.log('Navegación exitosa', r);
       });
-    }else{
+    } else {
       this.goToIndex()
     }
 

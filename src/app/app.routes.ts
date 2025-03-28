@@ -1,4 +1,4 @@
-import { Routes } from '@angular/router';
+import {Routes} from '@angular/router';
 
 export const routes: Routes = [
   {
@@ -29,14 +29,14 @@ export const routes: Routes = [
         loadComponent: () => import('./views/index/index.component')
       },
       {
-        path:'calificaciones',
+        path: 'calificaciones',
         title: 'Calificaciones',
         loadComponent: () => import('./views/listado-calificacion/listado-calificacion.component')
       },
-      {path:'', redirectTo:'inicio',pathMatch:'full'},
-      {path:'**', redirectTo:'inicio',pathMatch:'full'},
+      {path: '', redirectTo: 'inicio', pathMatch: 'full'},
+      {path: '**', redirectTo: 'inicio', pathMatch: 'full'},
     ],
   },
-  {path:'',redirectTo:'cumple/inicio',pathMatch:'full'},
-  {path:'**',redirectTo:'cumple/inicio',pathMatch:'full'}
+  {path: '', redirectTo: 'cumple/inicio', pathMatch: 'full'},
+  {path: '**', redirectTo: 'cumple/inicio', pathMatch: 'full'}
 ];

@@ -1,6 +1,6 @@
-import { Location } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import {Location} from '@angular/common';
+import {Component, OnInit} from '@angular/core';
+import {RouterLink} from '@angular/router';
 
 @Component({
   standalone: true,
@@ -8,11 +8,12 @@ import { RouterLink } from '@angular/router';
   templateUrl: './index.component.html',
   styles: ``
 })
-export default class IndexComponent implements OnInit{
+export default class IndexComponent implements OnInit {
 
-  iconoVisible:boolean=true;
+  iconoVisible: boolean = true;
 
-  constructor(private location: Location) { }
+  constructor(private location: Location) {
+  }
 
   ngOnInit(): void {
     this.location.onUrlChange((url: string) => {
@@ -24,8 +25,8 @@ export default class IndexComponent implements OnInit{
     sessionStorage.clear();
   }
 
-  logout(){
-    this.iconoVisible=false
+  logout() {
+    this.iconoVisible = false
     sessionStorage.clear();
     localStorage.clear();
   }
