@@ -78,8 +78,14 @@ export default class HomeComponent implements OnInit, AfterViewInit {
     this.botonBloquear=!this.botonBloquear;
     localStorage.setItem("acepta",JSON.stringify(this.aceptaPoliticas))
     this.validateObservationInput()
+    let id;
+    if (this.emp_nombre.startsWith("alm")){
+      id = this.emp_nombre.toUpperCase()
+    } else {
+      id = this.usrId;
+    }
     const empleado: Empleado = {
-      id : this.usrId,
+      id : id,
       nombre : this.emp_nombre.toUpperCase()
     }
     const cliente: Cliente ={
