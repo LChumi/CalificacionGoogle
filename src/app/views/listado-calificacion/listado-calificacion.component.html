@@ -1,8 +1,8 @@
-<div class="section  py-8 relative z-10">
+<div class="section relative">
   <div class="container mx-auto">
     <div class="card bg-white shadow-md">
       <div class="card-body">
-        <div class="relative w-full h-full p-4  rounded-lg">
+        <div class="w-full h-full  rounded-lg">
           <!-- Botón en la esquina superior izquierda -->
           <button (click)="viewCharts()"
                   class="absolute top-2 left-2 bg-blue-400 hover:bg-blue-500 text-white py-2 px-4 rounded flex items-center space-x-2 shadow-md">
@@ -27,7 +27,8 @@
         </div>
 
         @if (!viewChartsDiv) {
-          <h5 class="card-title text-center text-lg font-semibold">
+          <div class="flex flex-col rounded-xl shadow-lg w-full max-w-full overflow-hidden">
+          <h5 class="card-title text-center text-lg font-semibold mt-20 sm:mt-5 ">
             CALIFICACIONES
           </h5>
           <p class="text-sm text-gray-600 text-center">
@@ -121,8 +122,9 @@
               </tbody>
             </table>
           </div>
+          </div>
         } @else {
-          <div class="flex flex-col p-6 rounded-xl shadow-lg w-full max-w-full lg:max-w-6xl overflow-hidden">
+          <div class="flex flex-col rounded-xl shadow-lg w-full max-w-full overflow-hidden">
             <app-charts></app-charts>
           </div>
         }
