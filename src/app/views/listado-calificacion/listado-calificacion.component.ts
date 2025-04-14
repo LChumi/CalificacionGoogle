@@ -65,20 +65,23 @@ export default class ListadoCalificacionComponent implements OnInit {
     this.loading = true;
     const fechaInicio = this.fechaInicio ? this.fechaInicio : null;
     const fechaFin = this.fechaFin ? this.fechaFin : null;
-    const empleadoId = this.empleadoId ? this.empleadoId : null;
+    let empleadoId = this.empleadoId ? this.empleadoId : null;
     const rating = this.rating ? this.rating : null;
 
     let count = 0
     if (fechaInicio) count++
     if (fechaFin) count++;
-    if (empleadoId) count++;
+    if (empleadoId){
+      empleadoId = empleadoId.toUpperCase()
+      count++;
+    }
     if (rating) count++;
     if (count == 0) {
       this.loading = false;
       alert('campos vacios')
       return;
     }
-    this.calificacionService.search(empleadoId.toUpperCase(), rating, fechaInicio, fechaFin).subscribe({
+    this.calificacionService.search(empleadoId, rating, fechaInicio, fechaFin).subscribe({
       next: data => {
         this.calificaciones = data
         this.cleanInputs()
