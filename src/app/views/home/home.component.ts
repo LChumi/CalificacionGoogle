@@ -79,6 +79,11 @@ export default class HomeComponent implements OnInit, AfterViewInit {
     this.botonBloquear = !this.botonBloquear;
     localStorage.setItem("acepta", JSON.stringify(this.aceptaPoliticas))
     this.validateObservationInput()
+    if (this.rating === 0) {
+      alert('Ingrese su calificacion')
+      this.botonBloquear = !this.botonBloquear;
+      return;
+    }
     let id;
     if (this.emp_nombre.startsWith("alm")) {
       id = this.emp_nombre.toUpperCase()
