@@ -158,7 +158,6 @@ export class ChartsComponent implements OnInit, AfterViewInit {
         scales: {
           r: {
             beginAtZero: true,
-            max: 10, // Escala sobre 10
           },
         },
       },
