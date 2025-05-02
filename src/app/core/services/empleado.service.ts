@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
-import { Calificacion } from '../interfaces/calificacion';
 import { Observable } from 'rxjs';
 import { Usuario } from '../interfaces/usuario';
 
@@ -11,6 +10,7 @@ import { Usuario } from '../interfaces/usuario';
 export class EmpleadoService {
 
   private baseUrl=environment.apiUrlBase+'usuarios/'
+  private baseImagesrc=environment.apiUrlBase+'images/'
 
   constructor(private http: HttpClient) { }
 
@@ -19,6 +19,6 @@ export class EmpleadoService {
   }
 
   getImagen(imagen:any):Observable<Blob>{
-    return this.http.get(this.baseUrl+'imagen/'+imagen,{responseType: 'blob'});
+    return this.http.get(this.baseImagesrc+'usuario/'+imagen,{responseType: 'blob'});
   }
 }

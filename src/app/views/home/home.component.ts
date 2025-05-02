@@ -130,7 +130,7 @@ export default class HomeComponent implements OnInit, AfterViewInit {
     if (/SQUIÑONEZ/.test(this.usrId)) {
       this.usrId = 'SQUINONEZ';
     }
-    this.empleadoService.getImagen(this.usrId + '.jpg').subscribe({
+    this.empleadoService.getImagen(this.usrId).subscribe({
       next: data => {
         if (data) {
           this.imageDir = URL.createObjectURL(data);
