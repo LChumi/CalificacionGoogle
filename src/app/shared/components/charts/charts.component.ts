@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, inject, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, inject, Input, OnInit, ViewChild} from '@angular/core';
 import Chart from "chart.js/auto";
 import {CalificacionService} from "../../../core/services/calificacion.service";
 import {Calificacion} from "../../../core/interfaces/calificacion";
@@ -17,11 +17,11 @@ import {getFechaString} from "../../../utils/stringUtils";
 })
 export class ChartsComponent implements OnInit, AfterViewInit {
 
+  @Input() calificaciones: Calificacion[] = [];
+
   @ViewChild('chartCanvas') chartCanvas!: ElementRef<HTMLCanvasElement>;
   @ViewChild('chartCanvasRadar') chartCanvasRadar!: ElementRef<HTMLCanvasElement>;
   @ViewChild('chartCanvasNps') chartCanvasNps!: ElementRef<HTMLCanvasElement>;
-
-  private calificaciones:Calificacion[] =[]
 
   private calificacionService = inject(CalificacionService)
   private chartRadar!: Chart;
@@ -35,20 +35,13 @@ export class ChartsComponent implements OnInit, AfterViewInit {
   fecha!: string
 
   ngOnInit(): void {
-    this.getCalificaciones()
+    if (this.calificaciones.length!=0){
+      this.initChart()
+    }
   }
 
   ngAfterViewInit(){
     this.initChart()
-  }
-
-  getCalificaciones() {
-    this.calificacionService.all().subscribe({
-      next: data => {
-        this.calificaciones = data
-        this.initChart()
-      }
-    })
   }
 
   initChart(): void {
