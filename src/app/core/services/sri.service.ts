@@ -20,8 +20,12 @@ export class SriService {
     return this.http.get(`${this.baseUrl}cliente/${cedula}/${tipo}`, { responseType: 'text' })
       .pipe(
         map(response => {
-          const nombres = response.split('|')[0];
-          return formatearNombre(nombres.trim())
+          if (response) {
+            const nombres = response.split('|')[0]?.trim();
+            return formatearNombre(nombres);
+          } else {
+            return ''; // o lanza un error controlado
+          }
         })
       );
   }
